@@ -21,6 +21,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         'You are not authorized to perform the operation',
       );
     }
+
+    payload.userRecord = user;
+
     return payload;
   }
 }

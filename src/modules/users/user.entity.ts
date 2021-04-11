@@ -9,7 +9,10 @@ import {
   Model,
   DataType,
   Sequelize,
+  BelongsToMany,
 } from 'sequelize-typescript';
+import { UserConversations } from '../associations/user-conversations.entity';
+import { Conversation } from '../conversations/conversation.entity';
 
 @Table
 export class User extends Model {
@@ -23,9 +26,12 @@ export class User extends Model {
   @Unique
   @AllowNull(false)
   @Column(DataType.STRING)
-  login: string;
+  username: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
   password: string;
+
+  @BelongsToMany(() => Conversation, () => UserConversations)
+  users: Conversation[];
 }

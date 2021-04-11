@@ -10,7 +10,7 @@ import { plainToClass } from 'class-transformer';
 @Injectable()
 export class ValidateInputPipe implements PipeTransform {
   public async transform(value: any, { metatype }: ArgumentMetadata) {
-    if (!metatype) {
+    if (!metatype || !ValidateInputPipe.toValidate(metatype)) {
       return value;
     }
     const object = plainToClass(metatype, value);
@@ -27,5 +27,12 @@ export class ValidateInputPipe implements PipeTransform {
 
   private static handleError(errors) {
     return errors.map((e) => e.constraints);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  private static toValidate(metatype: Function): boolean {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    const types: Function[] = [String, Boolean, Number, Array, Object];
+    return !types.includes(metatype);
   }
 }

@@ -1,4 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
+import { UserConversations } from '../../modules/associations/user-conversations.entity';
+import { Conversation } from '../../modules/conversations/conversation.entity';
 import { User } from '../../modules/users/user.entity';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
 import { databaseConfig } from './database.config';
@@ -22,7 +24,7 @@ export const databaseProviders = [
           config = databaseConfig.development;
       }
       const sequelize = new Sequelize(config);
-      sequelize.addModels([User]);
+      sequelize.addModels([User, Conversation, UserConversations]);
       await sequelize.sync();
       return sequelize;
     },

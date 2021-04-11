@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { UsersService } from '../../modules/users/users.service';
 
 @Injectable()
-export class DoesUserExist implements CanActivate {
+export class DoesUsernameExist implements CanActivate {
   constructor(private readonly userService: UsersService) {}
 
   canActivate(
@@ -20,8 +20,8 @@ export class DoesUserExist implements CanActivate {
 
   async validateRequest({ body: { username } }) {
     const userExist = await this.userService.findOneByUsername(username);
-    if (userExist) {
-      throw new ForbiddenException('This login already exist');
+    if (!userExist) {
+      throw new ForbiddenException(`Username ${username} wasn't found`);
     }
     return true;
   }
