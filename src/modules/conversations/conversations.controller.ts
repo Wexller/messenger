@@ -17,12 +17,12 @@ import { ConversationDto } from './dto/conversation.dto';
 
 @Controller('conversations')
 export class ConversationsController {
-  constructor(private readonly conversationsService: ConversationsService) {}
+  constructor(private readonly conversationService: ConversationsService) {}
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Body() conversationDto: ConversationDto, @Request() req) {
-    return this.conversationsService.create(
+    return this.conversationService.create(
       conversationDto,
       req.user.userRecord,
     );
@@ -31,7 +31,7 @@ export class ConversationsController {
   @UseGuards(AuthGuard('jwt'))
   @Get()
   async findAll(@Request() req) {
-    return this.conversationsService.findAll(req.user.id);
+    return this.conversationService.findAll(req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -39,11 +39,11 @@ export class ConversationsController {
   @UseGuards(DoesUserHasAccessToConversationGuard)
   @Post('add_user')
   async addUser(@Body() { conversation_id, username }: ConversationAddUserDto) {
-    return this.conversationsService.addUser(conversation_id, username);
+    return this.conversationService.addUser(conversation_id, username);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.conversationsService.remove(id);
+    return this.conversationService.remove(id);
   }
 }
