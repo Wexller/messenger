@@ -1,13 +1,18 @@
 import authApi from '@/api/auth';
+import { getToken, setToken } from '@/local-storage';
 
 export default {
   namespaced: true,
-  state: () => ({
-    isUserLoggedIn: false,
-    token: null,
-    user: null,
-    loginInProcess: false,
-  }),
+  state: () => {
+    const token = getToken();
+
+    return {
+      isUserLoggedIn: !!token,
+      token,
+      user: null,
+      loginInProcess: false,
+    };
+  },
   actions: {
     async SIGN_IN({ commit }, { username, password }) {
       commit('START_LOGIN_PROCESS');
@@ -35,6 +40,8 @@ export default {
       state.token = token;
       state.user = user;
       state.isUserLoggedIn = true;
+
+      setToken(token);
     },
     START_LOGIN_PROCESS(state) {
       state.loginInProcess = true;
