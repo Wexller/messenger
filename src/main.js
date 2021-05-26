@@ -1,8 +1,17 @@
 import Vue from 'vue';
 import App from './App.vue';
 import store from './store';
+import { BootstrapVue } from 'bootstrap-vue';
+import './vee-validate';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/styles/template.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.config.productionTip = false;
+
+export const eventBus = new Vue();
+
+Vue.use(BootstrapVue);
 
 new Vue({
   store,
