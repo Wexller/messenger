@@ -9,7 +9,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { DoesUserHasAccessToConversationGuard } from '../../core/guards/doesUserHasAccessToConversation.guard';
+import { DoesUserHasAccessToConversation } from '../../core/guards/doesUserHasAccessToConversation.guard';
 import { DoesUsernameExist } from '../../core/guards/doesUsernameExist.guard';
 import { ConversationsService } from './conversations.service';
 import { ConversationAddUserDto } from './dto/conversation-add-user.dto';
@@ -22,10 +22,7 @@ export class ConversationsController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Body() conversationDto: ConversationDto, @Request() req) {
-    return this.conversationService.create(
-      conversationDto,
-      req.user.userRecord,
-    );
+    return this.conversationService.create(conversationDto, req.user.record);
   }
 
   @UseGuards(AuthGuard('jwt'))
@@ -34,9 +31,9 @@ export class ConversationsController {
     return this.conversationService.findAll(req.user.id);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @UseGuards(DoesUsernameExist)
-  @UseGuards(DoesUserHasAccessToConversationGuard)
+  @UseGuards(DoesUserHasAccessToConversation)
+  @UseGuards(AuthGuard('jwt'))
   @Post('add_user')
   async addUser(@Body() { conversation_id, username }: ConversationAddUserDto) {
     return this.conversationService.addUser(conversation_id, username);

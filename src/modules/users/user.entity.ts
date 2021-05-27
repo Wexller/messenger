@@ -10,9 +10,11 @@ import {
   DataType,
   Sequelize,
   BelongsToMany,
+  HasMany,
 } from 'sequelize-typescript';
 import { UserConversations } from '../associations/user-conversations.entity';
 import { Conversation } from '../conversations/conversation.entity';
+import { Message } from '../messages/message.entity';
 
 @Table
 export class User extends Model {
@@ -34,4 +36,7 @@ export class User extends Model {
 
   @BelongsToMany(() => Conversation, () => UserConversations)
   users: Conversation[];
+
+  @HasMany(() => Message)
+  messages: Message[];
 }

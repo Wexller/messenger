@@ -22,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       );
     }
 
-    payload.userRecord = user;
+    payload.record = user;
 
     return payload;
   }

@@ -5,6 +5,6 @@ export class UserDto {
   readonly username: string;
 
   @IsNotEmpty()
-  @MinLength(6)
+  @MinLength(2)
   readonly password: string;
 }

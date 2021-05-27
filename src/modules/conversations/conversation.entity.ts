@@ -10,8 +10,10 @@ import {
   Sequelize,
   BelongsToMany,
   IsDate,
+  HasMany,
 } from 'sequelize-typescript';
 import { CONVERSATION_TYPES } from '../../core/constants';
+import { Message } from '../messages/message.entity';
 import { User } from '../users/user.entity';
 import { UserConversations } from '../associations/user-conversations.entity';
 
@@ -48,4 +50,7 @@ export class Conversation extends Model {
 
   @BelongsToMany(() => User, () => UserConversations)
   users: User[];
+
+  @HasMany(() => Message)
+  messages: Message[];
 }

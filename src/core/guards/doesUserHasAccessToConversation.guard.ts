@@ -3,19 +3,14 @@ import {
   ExecutionContext,
   Injectable,
   ForbiddenException,
-  UnauthorizedException,
+  BadRequestException,
 } from '@nestjs/common';
-import { ExtractJwt } from 'passport-jwt';
-import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { ConversationsService } from '../../modules/conversations/conversations.service';
 
 @Injectable()
-export class DoesUserHasAccessToConversationGuard implements CanActivate {
-  constructor(
-    private readonly conversationsService: ConversationsService,
-    private readonly jwtService: JwtService,
-  ) {}
+export class DoesUserHasAccessToConversation implements CanActivate {
+  constructor(private readonly conversationsService: ConversationsService) {}
 
   canActivate(
     context: ExecutionContext,
@@ -25,34 +20,25 @@ export class DoesUserHasAccessToConversationGuard implements CanActivate {
   }
 
   async validateRequest(request) {
-    const jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()(request);
+    const conversationId = request.body.conversation_id ?? request.params.uuid;
 
-    if (!jwtFromRequest) {
-      throw new UnauthorizedException(
-        'You are not authorized to perform the operation',
+    if (!conversationId || conversationId.length !== 36) {
+      throw new BadRequestException(
+        `Conversation ID wasn't passed or incorrect format`,
       );
     }
 
-    const user = this.jwtService.verify(jwtFromRequest, {
-      secret: process.env.JWTKEY,
-    });
-
-    if (!user) {
-      throw new UnauthorizedException(
-        'You are not authorized to perform the operation',
-      );
-    }
-
-    const conversationExist = await this.conversationsService.findOneWithUser(
-      user.id,
-      request.body.conversation_id,
+    const conversationWithUser = await this.conversationsService.findOneWithUser(
+      request.user.id,
+      conversationId,
     );
 
-    if (!conversationExist) {
+    if (!conversationWithUser) {
       throw new ForbiddenException(
         `You don't have access to this conversation`,
       );
     }
+
     return true;
   }
 }
