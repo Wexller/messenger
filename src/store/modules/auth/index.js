@@ -1,5 +1,5 @@
 import authApi from '@/api/auth';
-import { getToken, setToken } from '@/local-storage';
+import { clearToken, getToken, setToken } from '@/local-storage';
 
 export default {
   namespaced: true,
@@ -34,6 +34,9 @@ export default {
 
       commit('STOP_LOGIN_PROCESS');
     },
+    LOGOUT({ commit }) {
+      commit('LOGOUT_USER');
+    },
   },
   mutations: {
     LOGIN_USER(state, { user, token }) {
@@ -42,6 +45,13 @@ export default {
       state.isUserLoggedIn = true;
 
       setToken(token);
+    },
+    LOGOUT_USER(state) {
+      state.token = null;
+      state.user = null;
+      state.isUserLoggedIn = false;
+
+      clearToken();
     },
     START_LOGIN_PROCESS(state) {
       state.loginInProcess = true;

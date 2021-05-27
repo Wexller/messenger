@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <m-login-form v-if="!isLoggedIn" />
+    <m-main v-if="isLoggedIn" />
+    <m-login-form v-else />
   </div>
 </template>
 
@@ -8,10 +9,11 @@
 import MLoginForm from './components/auth/m-auth';
 import { mapState } from 'vuex';
 import toast from '@/ui/toast';
+import MMain from '@/components/m-main';
 
 export default {
   name: 'App',
-  components: { MLoginForm },
+  components: { MMain, MLoginForm },
   computed: {
     ...mapState('auth', ['isUserLoggedIn']),
     isLoggedIn() {

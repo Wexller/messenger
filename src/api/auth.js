@@ -1,5 +1,5 @@
 import axios from './axios';
-window.axios = axios;
+
 export default {
   async signIn({ username, password }) {
     return await axios({
