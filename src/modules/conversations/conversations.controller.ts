@@ -43,4 +43,28 @@ export class ConversationsController {
   remove(@Param('id') id: string) {
     return this.conversationService.remove(id);
   }
+
+  @UseGuards(DoesUsernameExist)
+  @UseGuards(AuthGuard('jwt'))
+  @Post('start')
+  async start(@Request() req) {
+    const userNames = {
+      requestedUser: req.user.username,
+      targetUser: req.requestedUser.username,
+    };
+
+    const userRecords = {
+      requestedUserRecord: req.user.record,
+      targetUserRecord: req.requestedUser.record,
+    };
+
+    const conversationId = await this.conversationService.startConversation(
+      userNames,
+      userRecords,
+    );
+
+    return {
+      conversationId,
+    };
+  }
 }

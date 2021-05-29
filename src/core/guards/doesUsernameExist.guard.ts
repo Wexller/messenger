@@ -18,11 +18,23 @@ export class DoesUsernameExist implements CanActivate {
     return this.validateRequest(request);
   }
 
-  async validateRequest({ body: { username } }) {
-    const userExist = await this.userService.findOneByUsername(username);
-    if (!userExist) {
+  async validateRequest(payload: any) {
+    const {
+      body: { username },
+    } = payload;
+
+    const user = await this.userService.findOneByUsername(username);
+
+    if (!user) {
       throw new ForbiddenException(`Username ${username} wasn't found`);
     }
+
+    payload.requestedUser = {
+      id: user.id,
+      username: user.username,
+      record: user,
+    };
+
     return true;
   }
 }

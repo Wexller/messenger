@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from '../../core/constants';
 import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -23,5 +24,16 @@ export class UsersService {
 
   async findOneById(id: string): Promise<User> {
     return await this.userRepository.findOne<User>({ where: { id } });
+  }
+
+  async findAll(username: string): Promise<User[]> {
+    return await this.userRepository.findAll({
+      attributes: ['id', 'username'],
+      where: {
+        [Op.not]: {
+          username,
+        },
+      },
+    });
   }
 }
