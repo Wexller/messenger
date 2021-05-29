@@ -38,366 +38,60 @@
 
           <!-- Friends -->
           <nav class="mb-n6">
-            <div class="mb-6">
-              <small class="text-uppercase">A</small>
-            </div>
-
-            <!-- Friend -->
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="media">
-                  <div class="avatar avatar-online mr-5">
-                    <img class="avatar-img" :src="avatarMale" alt="Anna Bridges" />
-                  </div>
-
-                  <div class="media-body align-self-center">
-                    <h6 class="mb-0">Anna Bridges</h6>
-                    <small class="text-muted">Online</small>
-                  </div>
-
-                  <div class="align-self-center ml-5">
-                    <div class="dropdown z-index-max">
-                      <a
-                        href="#"
-                        class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          New chat <span class="ml-auto fe-edit-2"></span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          Delete <span class="ml-auto fe-trash-2"></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Link -->
-                <a href="chat-2.html" class="stretched-link"></a>
+            <template v-for="(friends, group) in friendsGrouped">
+              <div class="mb-6">
+                <small class="text-uppercase">{{ group }}</small>
               </div>
-            </div>
-            <!-- Friend -->
 
-            <div class="mb-6">
-              <small class="text-uppercase">B</small>
-            </div>
+              <!-- Friend -->
+              <m-friend v-for="friend in friends" :key="friend.id" :friend="friend" :avatar="avatarMale" />
+              <!-- Friend -->
+            </template>
 
-            <!-- Friend -->
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="media">
-                  <div class="avatar mr-5">
-                    <img class="avatar-img" :src="avatarFemale" alt="Brian Dawson" />
-                  </div>
-
-                  <div class="media-body align-self-center">
-                    <h6 class="mb-0">Brian Dawson</h6>
-                    <small class="text-muted">last seen 2 hours ago</small>
-                  </div>
-
-                  <div class="align-self-center ml-5">
-                    <div class="dropdown z-index-max">
-                      <a
-                        href="#"
-                        class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          New chat <span class="ml-auto fe-edit-2"></span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          Delete <span class="ml-auto fe-trash-2"></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Link -->
-                <a href="#" class="stretched-link"></a>
-              </div>
-            </div>
-            <!-- Friend -->
-
-            <div class="mb-6">
-              <small class="text-uppercase">L</small>
-            </div>
+            <!--            <div class="mb-6">-->
+            <!--              <small class="text-uppercase">B</small>-->
+            <!--            </div>-->
 
             <!-- Friend -->
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="media">
-                  <div class="avatar mr-5">
-                    <img class="avatar-img" :src="avatarMale" alt="Leslie Sutton" />
-                  </div>
+            <!--            <div class="card mb-6">-->
+            <!--              <div class="card-body">-->
+            <!--                <div class="media">-->
+            <!--                  <div class="avatar mr-5">-->
+            <!--                    <img class="avatar-img" :src="avatarFemale" alt="Brian Dawson" />-->
+            <!--                  </div>-->
 
-                  <div class="media-body align-self-center">
-                    <h6 class="mb-0">Leslie Sutton</h6>
-                    <small class="text-muted">last seen 3 days ago</small>
-                  </div>
+            <!--                  <div class="media-body align-self-center">-->
+            <!--                    <h6 class="mb-0">Brian Dawson</h6>-->
+            <!--                    <small class="text-muted">last seen 2 hours ago</small>-->
+            <!--                  </div>-->
 
-                  <div class="align-self-center ml-5">
-                    <div class="dropdown z-index-max">
-                      <a
-                        href="#"
-                        class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          New chat <span class="ml-auto fe-edit-2"></span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          Delete <span class="ml-auto fe-trash-2"></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <!--                  <div class="align-self-center ml-5">-->
+            <!--                    <div class="dropdown z-index-max">-->
+            <!--                      <a-->
+            <!--                        href="#"-->
+            <!--                        class="btn btn-sm btn-ico btn-link text-muted w-auto"-->
+            <!--                        data-toggle="dropdown"-->
+            <!--                        aria-haspopup="true"-->
+            <!--                        aria-expanded="false"-->
+            <!--                      >-->
+            <!--                        <i class="fe-more-vertical"></i>-->
+            <!--                      </a>-->
+            <!--                      <div class="dropdown-menu">-->
+            <!--                        <a class="dropdown-item d-flex align-items-center" href="#">-->
+            <!--                          New chat <span class="ml-auto fe-edit-2"></span>-->
+            <!--                        </a>-->
+            <!--                        <a class="dropdown-item d-flex align-items-center" href="#">-->
+            <!--                          Delete <span class="ml-auto fe-trash-2"></span>-->
+            <!--                        </a>-->
+            <!--                      </div>-->
+            <!--                    </div>-->
+            <!--                  </div>-->
+            <!--                </div>-->
 
-                <!-- Link -->
-                <a href="#" class="stretched-link"></a>
-              </div>
-            </div>
-            <!-- Friend -->
-
-            <div class="mb-6">
-              <small class="text-uppercase">M</small>
-            </div>
-
-            <!-- Friend -->
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="media">
-                  <div class="avatar mr-5">
-                    <img class="avatar-img" :src="avatarFemale" alt="Matthew Wiggins" />
-                  </div>
-
-                  <div class="media-body align-self-center">
-                    <h6 class="mb-0">Matthew Wiggins</h6>
-                    <small class="text-muted">last seen 3 days ago</small>
-                  </div>
-
-                  <div class="align-self-center ml-5">
-                    <div class="dropdown z-index-max">
-                      <a
-                        href="#"
-                        class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          New chat <span class="ml-auto fe-edit-2"></span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          Delete <span class="ml-auto fe-trash-2"></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Link -->
-                <a href="#" class="stretched-link"></a>
-              </div>
-            </div>
-            <!-- Friend -->
-
-            <div class="mb-6">
-              <small class="text-uppercase">S</small>
-            </div>
-
-            <!-- Friend -->
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="media">
-                  <div class="avatar mr-5">
-                    <img class="avatar-img" :src="avatarMale" alt="Simon Hensley" />
-                  </div>
-
-                  <div class="media-body align-self-center">
-                    <h6 class="mb-0">Simon Hensley</h6>
-                    <small class="text-muted">last seen 3 days ago</small>
-                  </div>
-
-                  <div class="align-self-center ml-5">
-                    <div class="dropdown z-index-max">
-                      <a
-                        href="#"
-                        class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          New chat <span class="ml-auto fe-edit-2"></span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          Delete <span class="ml-auto fe-trash-2"></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Link -->
-                <a href="#" class="stretched-link"></a>
-              </div>
-            </div>
-            <!-- Friend -->
-
-            <div class="mb-6">
-              <small class="text-uppercase">W</small>
-            </div>
-
-            <!-- Friend -->
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="media">
-                  <div class="avatar mr-5">
-                    <img class="avatar-img" :src="avatarFemale" alt="William Wright" />
-                  </div>
-
-                  <div class="media-body align-self-center">
-                    <h6 class="mb-0">William Wright</h6>
-                    <small class="text-muted">last seen 3 days ago</small>
-                  </div>
-
-                  <div class="align-self-center ml-5">
-                    <div class="dropdown z-index-max">
-                      <a
-                        href="#"
-                        class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          New chat <span class="ml-auto fe-edit-2"></span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          Delete <span class="ml-auto fe-trash-2"></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Link -->
-                <a href="#" class="stretched-link"></a>
-              </div>
-            </div>
-            <!-- Friend --><!-- Friend -->
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="media">
-                  <div class="avatar mr-5">
-                    <img class="avatar-img" :src="avatarMale" alt="William Greer" />
-                  </div>
-
-                  <div class="media-body align-self-center">
-                    <h6 class="mb-0">William Greer</h6>
-                    <small class="text-muted">last seen 10 minutes ago</small>
-                  </div>
-
-                  <div class="align-self-center ml-5">
-                    <div class="dropdown z-index-max">
-                      <a
-                        href="#"
-                        class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          New chat <span class="ml-auto fe-edit-2"></span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          Delete <span class="ml-auto fe-trash-2"></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Link -->
-                <a href="#" class="stretched-link"></a>
-              </div>
-            </div>
-            <!-- Friend -->
-
-            <div class="mb-6">
-              <small class="text-uppercase">Z</small>
-            </div>
-
-            <!-- Friend -->
-            <div class="card mb-6">
-              <div class="card-body">
-                <div class="media">
-                  <div class="avatar mr-5">
-                    <img class="avatar-img" :src="avatarFemale" alt="Zane Mayes" />
-                  </div>
-
-                  <div class="media-body align-self-center">
-                    <h6 class="mb-0">Zane Mayes</h6>
-                    <small class="text-muted">last seen 3 days ago</small>
-                  </div>
-
-                  <div class="align-self-center ml-5">
-                    <div class="dropdown z-index-max">
-                      <a
-                        href="#"
-                        class="btn btn-sm btn-ico btn-link text-muted w-auto"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          New chat <span class="ml-auto fe-edit-2"></span>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                          Delete <span class="ml-auto fe-trash-2"></span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Link -->
-                <a href="#" class="stretched-link"></a>
-              </div>
-            </div>
+            <!--                &lt;!&ndash; Link &ndash;&gt;-->
+            <!--                <a href="#" class="stretched-link"></a>-->
+            <!--              </div>-->
+            <!--            </div>-->
             <!-- Friend -->
           </nav>
           <!-- Friends -->
@@ -410,14 +104,44 @@
 <script>
 import avatarMale from '@/assets/images/avatar_male.jpg';
 import avatarFemale from '@/assets/images/avatar_female.jpg';
+import MFriend from '@/components/sidebar/m-friend';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'm-friends-list',
+  components: { MFriend },
   data() {
     return {
       avatarMale,
       avatarFemale,
     };
+  },
+  computed: {
+    ...mapState('sidebar', ['friends']),
+    friendsList() {
+      return this.friends;
+    },
+    friendsGrouped() {
+      return this.friendsList.reduce((acc, cur) => {
+        const key = cur.username[0].toLowerCase();
+
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+
+        acc[key].push(cur);
+
+        return acc;
+      }, {});
+    },
+  },
+  methods: {
+    ...mapActions('sidebar', ['GET_FRIENDS']),
+  },
+  created() {
+    if (!this.friendsList.length) {
+      this.GET_FRIENDS();
+    }
   },
 };
 </script>

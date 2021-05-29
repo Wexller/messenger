@@ -1,4 +1,4 @@
-import authApi from '@/api/auth';
+import { authApi } from '@/api';
 import { clearToken, getToken, setToken } from '@/local-storage';
 
 export default {
@@ -16,20 +16,20 @@ export default {
   actions: {
     async SIGN_IN({ commit }, { username, password }) {
       commit('START_LOGIN_PROCESS');
-      const result = await authApi.signIn({ username, password });
+      const { data, success } = await authApi.signIn({ username, password });
 
-      if (result.success) {
-        commit('LOGIN_USER', result);
+      if (success) {
+        commit('LOGIN_USER', data);
       }
 
       commit('STOP_LOGIN_PROCESS');
     },
     async SIGN_UP({ commit }, { username, password }) {
       commit('START_LOGIN_PROCESS');
-      const result = await authApi.signUp({ username, password });
+      const { data, success } = await authApi.signUp({ username, password });
 
-      if (result.success) {
-        commit('LOGIN_USER', result);
+      if (success) {
+        commit('LOGIN_USER', data);
       }
 
       commit('STOP_LOGIN_PROCESS');
