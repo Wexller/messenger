@@ -1,7 +1,7 @@
 <template>
   <div class="chat-footer border-top py-4 py-lg-6 px-lg-8">
     <div class="container-xxl">
-      <form id="chat-id-2-form" action="assets/php/upload.php" data-emoji-form="">
+      <form id="chat-id-2-form" data-emoji-form="">
         <div class="form-row align-items-center">
           <div class="col">
             <div class="input-group">
