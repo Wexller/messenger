@@ -5,7 +5,7 @@ export default {
   namespaced: true,
   state: () => {
     return {
-      currentTab: TABS.CONVERSATIONS,
+      currentTab: TABS.FRIENDS_LIST,
       friends: [],
     };
   },

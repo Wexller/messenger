@@ -1,15 +1,16 @@
 import { authApi } from '@/api';
-import { clearToken, getToken, setToken } from '@/local-storage';
+import { localStorageToken, localStorageUserId } from '@/local-storage';
 
 export default {
   namespaced: true,
   state: () => {
-    const token = getToken();
+    const token = localStorageToken.get();
+    const userId = localStorageUserId.get();
 
     return {
       isUserLoggedIn: !!token,
       token,
-      user: null,
+      userId,
       loginInProcess: false,
     };
   },
@@ -41,17 +42,19 @@ export default {
   mutations: {
     LOGIN_USER(state, { user, token }) {
       state.token = token;
-      state.user = user;
+      state.userId = user.id;
       state.isUserLoggedIn = true;
 
-      setToken(token);
+      localStorageToken.set(token);
+      localStorageUserId.set(user.id);
     },
     LOGOUT_USER(state) {
       state.token = null;
-      state.user = null;
+      state.userId = null;
       state.isUserLoggedIn = false;
 
-      clearToken();
+      localStorageToken.clear();
+      localStorageUserId.clear();
     },
     START_LOGIN_PROCESS(state) {
       state.loginInProcess = true;

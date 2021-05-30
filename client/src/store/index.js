@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import auth from './modules/auth';
 import sidebar from './modules/sidebar';
 import conversation from './modules/conversation';
+import message from './modules/message';
 import { CONTENT_TYPES } from '@/constants';
 
 Vue.use(Vuex);
@@ -21,5 +22,5 @@ export default new Vuex.Store({
       state.contentType = type;
     },
   },
-  modules: { auth, sidebar, conversation },
+  modules: { auth, sidebar, conversation, message },
 });

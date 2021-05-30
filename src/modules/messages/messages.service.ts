@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { MESSAGE_REPOSITORY } from '../../core/constants';
+import { User } from '../users/user.entity';
 import { MessageCreateDto } from './dto/message-create.dto';
 import { MessagesGetDto } from './dto/messages-get.dto';
 import { Message } from './message.entity';
@@ -15,14 +16,13 @@ export class MessagesService {
     return await this.messageRepository.create<Message>(message);
   }
 
-  async getMessagesInConversation(
-    messagesGet: MessagesGetDto,
-  ): Promise<Message[]> {
+  async getMessagesInConversation({ conversation_id }: MessagesGetDto): Promise<Message[]> {
     return await this.messageRepository.findAll({
       where: {
-        user_id: messagesGet.user_id,
-        conversation_id: messagesGet.conversation_id,
+        conversation_id,
       },
+      include: [User],
+      order: [['createdAt', 'ASC']],
     });
   }
 }

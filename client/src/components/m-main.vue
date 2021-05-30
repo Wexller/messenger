@@ -52,11 +52,14 @@ export default {
         }
       }
 
+      this.GET_MESSAGES();
+
       this.CHANGE_CONTENT_TYPE(contentType)
     }
   },
   methods: {
     ...mapActions(['CHANGE_CONTENT_TYPE']),
+    ...mapActions('message', ['GET_MESSAGES']),
     isContentVisible(contentType) {
       return contentType === this.currentContentType;
     },

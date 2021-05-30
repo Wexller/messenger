@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UseGuards,
-  Request,
-  Param,
-  Get,
-  ParseUUIDPipe,
-} from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request, Param, Get, ParseUUIDPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { DoesUserHasAccessToConversation } from '../../core/guards/doesUserHasAccessToConversation.guard';
 import { MessageDto } from './dto/message.dto';
@@ -19,14 +10,10 @@ export class MessagesController {
 
   @UseGuards(DoesUserHasAccessToConversation)
   @UseGuards(AuthGuard('jwt'))
-  @Get(':uuid')
-  async getMessages(
-    @Param('uuid', new ParseUUIDPipe()) uuid: string,
-    @Request() req,
-  ) {
+  @Get(':conversation_id')
+  async getMessages(@Param('conversation_id', new ParseUUIDPipe()) conversation_id: string) {
     return await this.messageService.getMessagesInConversation({
-      conversation_id: uuid,
-      user_id: req.user.id,
+      conversation_id,
     });
   }
 

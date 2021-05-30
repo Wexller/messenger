@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Delete,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { DoesUserHasAccessToConversation } from '../../core/guards/doesUserHasAccessToConversation.guard';
 import { DoesUsernameExist } from '../../core/guards/doesUsernameExist.guard';
@@ -58,13 +49,6 @@ export class ConversationsController {
       targetUserRecord: req.requestedUser.record,
     };
 
-    const conversationId = await this.conversationService.startConversation(
-      userNames,
-      userRecords,
-    );
-
-    return {
-      conversationId,
-    };
+    return await this.conversationService.startConversation(userNames, userRecords);
   }
 }

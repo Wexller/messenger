@@ -1,13 +1,13 @@
 <template>
   <div class="chat-footer border-top py-4 py-lg-6 px-lg-8">
     <div class="container-xxl">
-      <form id="chat-id-2-form" data-emoji-form="">
+      <form @submit.prevent="submitHandler" data-emoji-form="">
         <div class="form-row align-items-center">
           <div class="col">
             <div class="input-group">
               <!-- Textarea -->
               <textarea
-                id="chat-id-2-input"
+                v-model="text"
                 class="form-control bg-transparent border-0"
                 placeholder="Type your message..."
                 rows="1"
@@ -53,11 +53,24 @@
 </template>
 
 <script>
-import MEmojiIcon from '@/components/icons/m-emoji-icon';
+import MEmojiIcon     from '@/components/icons/m-emoji-icon';
 import MPaperclipIcon from '@/components/icons/m-paperclip-icon';
+import { mapActions } from "vuex";
 
 export default {
   name: 'm-conversation-footer',
   components: { MPaperclipIcon, MEmojiIcon },
+  data() {
+    return {
+      text: ''
+    }
+  },
+  methods: {
+    ...mapActions('message', ['SEND_MESSAGE']),
+    async submitHandler() {
+      await this.SEND_MESSAGE(this.text)
+      this.text = ''
+    }
+  }
 };
 </script>

@@ -70,27 +70,24 @@ export class ConversationsService {
     });
   }
 
-  async startConversation({ requestedUser, targetUser }, { requestedUserRecord, targetUserRecord }): Promise<string> {
+  async startConversation(
+    { requestedUser, targetUser },
+    { requestedUserRecord, targetUserRecord },
+  ): Promise<Conversation> {
     const conversations = await this.getUsersConversation(requestedUser, targetUser);
 
-    let conversationId = null;
+    let conversation;
 
     if (conversations && conversations.length) {
       const numberOfUsers = 2;
-      const conversation = conversations.find((item) => item.users.length === numberOfUsers);
+      conversation = conversations.find((item) => item.users.length === numberOfUsers);
 
-      if (conversation?.id) {
-        conversationId = conversation.id;
+      if (!conversation) {
+        conversation = await this.createPrivate(targetUser, requestedUserRecord, targetUserRecord);
       }
     }
 
-    if (!conversationId) {
-      const result = await this.createPrivate(targetUser, requestedUserRecord, targetUserRecord);
-
-      conversationId = result.id;
-    }
-
-    return conversationId;
+    return conversation;
   }
 
   async getUsersConversation(user1: string, user2: string): Promise<Conversation[]> {
@@ -101,7 +98,7 @@ export class ConversationsService {
           attributes: [],
         },
       },
-      attributes: ['id'],
+      attributes: ['id', 'name'],
       where: {
         type: CONVERSATION_TYPES.PRIVATE,
         '$users.username$': [user1, user2],
