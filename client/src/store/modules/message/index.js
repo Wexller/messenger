@@ -18,6 +18,14 @@ export default {
       Vue.set(state.messagesData, key, messages);
       // state.messagesData = { ...state.messagesData, [key]: messages };
     },
+    APPEND_MESSAGE(state, message) {
+      const key = message.conversation_id;
+
+      if (!state.messagesData[key] || !Array.isArray(state.messagesData[key])) {
+        Vue.set(state.messagesData, key, []);
+      }
+      state.messagesData[key].push(message);
+    },
   },
   actions: {
     async SEND_MESSAGE({ commit, rootState }, text) {
@@ -33,6 +41,9 @@ export default {
       if (success) {
         commit('SET_MESSAGES', { messages: data, key: conversation.id });
       }
+    },
+    socket_newMessage({ commit }, message) {
+      commit('APPEND_MESSAGE', message);
     },
   },
 };

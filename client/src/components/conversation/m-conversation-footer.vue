@@ -8,6 +8,7 @@
               <!-- Textarea -->
               <textarea
                 v-model="text"
+                @keydown.enter.prevent="submitHandler"
                 class="form-control bg-transparent border-0"
                 placeholder="Type your message..."
                 rows="1"

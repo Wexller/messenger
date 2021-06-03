@@ -36,6 +36,11 @@ export class ConversationsService {
     });
   }
 
+  async getUserConversationIds(userId: string) {
+    const conversations = await this.findAll(userId);
+    return conversations.map((c) => c.id);
+  }
+
   async addUser(conversationId: string, username: string): Promise<boolean> {
     const conversation = await this.conversationRepository.findByPk(conversationId);
 

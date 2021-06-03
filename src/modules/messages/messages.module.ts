@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConversationsModule } from '../conversations/conversations.module';
+import { RedisPropagatorModule } from '../shared/redis-propagator/redis-propagator.module';
 import { messagesProviders } from './message.providers';
 import { MessagesController } from './messages.controller';
 import { MessagesService } from './messages.service';
@@ -12,6 +13,7 @@ import { MessagesService } from './messages.service';
       secret: process.env.JWTKEY,
       signOptions: { expiresIn: process.env.TOKEN_EXPIRATION },
     }),
+    RedisPropagatorModule,
   ],
   controllers: [MessagesController],
   providers: [MessagesService, ...messagesProviders],

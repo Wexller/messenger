@@ -7,6 +7,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ConversationsModule } from './modules/conversations/conversations.module';
 import { AssociationsModule } from './modules/associations/associations.module';
 import { MessagesModule } from './modules/messages/messages.module';
+import { SharedModule } from './modules/shared/shared.module';
+import { EventsGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -17,6 +19,9 @@ import { MessagesModule } from './modules/messages/messages.module';
     ConversationsModule,
     AssociationsModule,
     MessagesModule,
+    AuthModule,
+    SharedModule,
   ],
+  providers: [EventsGateway],
 })
 export class AppModule {}

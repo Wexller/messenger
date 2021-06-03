@@ -5,10 +5,7 @@ import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UsersService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly userService: UsersService, private readonly jwtService: JwtService) {}
 
   async validateUser(username: string, pass: string) {
     // find if user exist with this username
@@ -52,6 +49,10 @@ export class AuthService {
 
   private async generateToken(user) {
     return await this.jwtService.signAsync(user);
+  }
+
+  async verifyJwt(jwtToken: string): Promise<any> {
+    return await this.jwtService.verify(jwtToken, { secret: process.env.JWTKEY });
   }
 
   private static async hashPassword(password) {
