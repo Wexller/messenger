@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
-import { UserConversations } from '../../modules/associations/user-conversations.entity';
+import { UserConversation } from '../../modules/user-conversation/user-conversation.entity';
 import { Conversation } from '../../modules/conversations/conversation.entity';
 import { Message } from '../../modules/messages/message.entity';
 import { User } from '../../modules/users/user.entity';
@@ -25,7 +25,7 @@ export const databaseProviders = [
           config = databaseConfig.development;
       }
       const sequelize = new Sequelize(config);
-      sequelize.addModels([User, Conversation, UserConversations, Message]);
+      sequelize.addModels([User, Conversation, UserConversation, Message]);
       await sequelize.sync();
       return sequelize;
     },

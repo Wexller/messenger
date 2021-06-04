@@ -15,7 +15,7 @@ import {
 import { CONVERSATION_TYPES } from '../../core/constants';
 import { Message } from '../messages/message.entity';
 import { User } from '../users/user.entity';
-import { UserConversations } from '../associations/user-conversations.entity';
+import { UserConversation } from '../user-conversation/user-conversation.entity';
 
 @Table
 export class Conversation extends Model {
@@ -48,7 +48,7 @@ export class Conversation extends Model {
   @Column(DataType.DATE)
   last_message_at: Date;
 
-  @BelongsToMany(() => User, () => UserConversations)
+  @BelongsToMany(() => User, () => UserConversation)
   users: User[];
 
   @HasMany(() => Message)

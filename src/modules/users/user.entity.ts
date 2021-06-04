@@ -12,7 +12,7 @@ import {
   BelongsToMany,
   HasMany,
 } from 'sequelize-typescript';
-import { UserConversations } from '../associations/user-conversations.entity';
+import { UserConversation } from '../user-conversation/user-conversation.entity';
 import { Conversation } from '../conversations/conversation.entity';
 import { Message } from '../messages/message.entity';
 
@@ -34,9 +34,12 @@ export class User extends Model {
   @Column(DataType.STRING)
   password: string;
 
-  @BelongsToMany(() => Conversation, () => UserConversations)
+  @BelongsToMany(() => Conversation, () => UserConversation)
   users: Conversation[];
 
   @HasMany(() => Message)
   messages: Message[];
+
+  @HasMany(() => UserConversation)
+  userConversations: Message[];
 }

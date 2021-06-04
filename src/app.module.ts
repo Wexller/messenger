@@ -5,10 +5,10 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConversationsModule } from './modules/conversations/conversations.module';
-import { AssociationsModule } from './modules/associations/associations.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { EventsGateway } from './app.gateway';
+import { UserConversationModule } from './modules/user-conversation/user-conversation.module';
 
 @Module({
   imports: [
@@ -17,10 +17,10 @@ import { EventsGateway } from './app.gateway';
     UsersModule,
     AuthModule,
     ConversationsModule,
-    AssociationsModule,
     MessagesModule,
     AuthModule,
     SharedModule,
+    UserConversationModule,
   ],
   providers: [EventsGateway],
 })
