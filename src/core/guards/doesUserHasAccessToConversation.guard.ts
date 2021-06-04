@@ -12,7 +12,7 @@ export class DoesUserHasAccessToConversation implements CanActivate {
   }
 
   async validateRequest(request) {
-    const conversationId = request.body.conversation_id ?? request.params.conversation_id;
+    const conversationId = request.body.conversationId ?? request.params.conversationId;
 
     if (!conversationId || conversationId.length !== 36) {
       throw new BadRequestException(`Conversation ID wasn't passed or incorrect format`);

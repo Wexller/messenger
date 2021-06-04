@@ -4,7 +4,7 @@ import { UUID_LENGTH } from '../../../constants';
 export class ConversationAddUserDto {
   @IsNotEmpty()
   @Length(UUID_LENGTH)
-  readonly conversation_id: string;
+  readonly conversationId: string;
 
   @IsNotEmpty()
   readonly username: string;

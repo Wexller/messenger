@@ -10,10 +10,10 @@ export class MessageController {
 
   @UseGuards(DoesUserHasAccessToConversation)
   @UseGuards(AuthGuard('jwt'))
-  @Get(':conversation_id')
-  async getMessages(@Param('conversation_id', new ParseUUIDPipe()) conversation_id: string) {
+  @Get(':conversationId')
+  async getMessages(@Param('conversationId', new ParseUUIDPipe()) conversationId: string) {
     return await this.messageService.getMessagesInConversation({
-      conversation_id,
+      conversationId,
     });
   }
 
@@ -23,7 +23,7 @@ export class MessageController {
   async create(@Body() messageDto: MessageDto, @Request() req) {
     return await this.messageService.create({
       ...messageDto,
-      user_id: req.user.id,
+      userId: req.user.id,
     });
   }
 }

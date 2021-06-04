@@ -5,5 +5,5 @@ import { MessageDto } from './message.dto';
 export class MessageCreateDto extends MessageDto {
   @IsNotEmpty()
   @Length(UUID_LENGTH)
-  readonly user_id: string;
+  readonly userId: string;
 }

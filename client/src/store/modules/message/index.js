@@ -19,7 +19,7 @@ export default {
       // state.messagesData = { ...state.messagesData, [key]: messages };
     },
     APPEND_MESSAGE(state, message) {
-      const key = message.conversation_id;
+      const key = message.conversationId;
 
       if (!state.messagesData[key] || !Array.isArray(state.messagesData[key])) {
         Vue.set(state.messagesData, key, []);

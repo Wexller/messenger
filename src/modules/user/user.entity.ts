@@ -35,7 +35,7 @@ export class User extends Model {
   password: string;
 
   @BelongsToMany(() => Conversation, () => UserConversation)
-  users: Conversation[];
+  conversations: Conversation[];
 
   @HasMany(() => Message)
   messages: Message[];

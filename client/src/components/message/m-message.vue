@@ -80,7 +80,7 @@ export default {
   computed: {
     ...mapState('auth', ['userId']),
     isCurrentUserMessage() {
-      return this.message.user_id === this.userId
+      return this.message.userId === this.userId
     },
     avatarClasses() {
       return this.isCurrentUserMessage

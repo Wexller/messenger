@@ -58,8 +58,8 @@ export class ConversationService {
   async updateLastMessage(conversationId: string, message = 'Message'): Promise<[number, Conversation[]]> {
     return await this.conversationRepository.update(
       {
-        last_message_text: message,
-        last_message_at: new Date(),
+        lastMessageText: message,
+        lastMessageAt: new Date(),
       },
       { where: { id: conversationId } },
     );

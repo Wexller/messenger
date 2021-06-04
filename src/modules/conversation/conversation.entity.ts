@@ -40,13 +40,13 @@ export class Conversation extends Model {
   @AllowNull(false)
   @Default('New conversation')
   @Column(DataType.TEXT)
-  last_message_text: string;
+  lastMessageText: string;
 
   @IsDate
   @AllowNull(false)
   @Default(new Date())
   @Column(DataType.DATE)
-  last_message_at: Date;
+  lastMessageAt: Date;
 
   @BelongsToMany(() => User, () => UserConversation)
   users: User[];

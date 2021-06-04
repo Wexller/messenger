@@ -4,5 +4,5 @@ import { UUID_LENGTH } from '../../../constants';
 export class MessagesGetDto {
   @IsNotEmpty()
   @Length(UUID_LENGTH)
-  readonly conversation_id: string;
+  readonly conversationId: string;
 }

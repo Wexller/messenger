@@ -31,13 +31,13 @@ export class Message extends Model {
   @IsUUID(4)
   @ForeignKey(() => User)
   @Column(DataType.UUID)
-  user_id: string;
+  userId: string;
 
   @AllowNull(false)
   @IsUUID(4)
   @ForeignKey(() => Conversation)
   @Column(DataType.UUID)
-  conversation_id: string;
+  conversationId: string;
 
   @BelongsTo(() => User)
   user: User;

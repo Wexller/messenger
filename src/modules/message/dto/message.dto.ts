@@ -7,5 +7,5 @@ export class MessageDto {
 
   @IsNotEmpty()
   @Length(UUID_LENGTH)
-  readonly conversation_id: string;
+  readonly conversationId: string;
 }

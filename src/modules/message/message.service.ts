@@ -18,7 +18,7 @@ export class MessageService {
     const newMessage = await this.messageRepository.create<Message>(message);
 
     this.redisPropagatorService.emitToConversation({
-      conversationId: newMessage.conversation_id,
+      conversationId: newMessage.conversationId,
       event: 'newMessage',
       data: newMessage,
     });
@@ -26,10 +26,10 @@ export class MessageService {
     return newMessage;
   }
 
-  async getMessagesInConversation({ conversation_id }: MessagesGetDto): Promise<Message[]> {
+  async getMessagesInConversation({ conversationId }: MessagesGetDto): Promise<Message[]> {
     return await this.messageRepository.findAll({
       where: {
-        conversation_id,
+        conversationId,
       },
       include: [User],
       order: [['createdAt', 'ASC']],

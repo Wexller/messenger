@@ -26,8 +26,8 @@ export class ConversationController {
   @UseGuards(DoesUserHasAccessToConversation)
   @UseGuards(AuthGuard('jwt'))
   @Post('add_user')
-  async addUser(@Body() { conversation_id, username }: ConversationAddUserDto) {
-    return this.conversationService.addUser(conversation_id, username);
+  async addUser(@Body() { conversationId, username }: ConversationAddUserDto) {
+    return this.conversationService.addUser(conversationId, username);
   }
 
   @Delete(':id')
