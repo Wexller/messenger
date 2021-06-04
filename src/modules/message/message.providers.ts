@@ -1,4 +1,4 @@
-import { MESSAGE_REPOSITORY } from '../../core/constants';
+import { MESSAGE_REPOSITORY } from './message.constants';
 import { Message } from './message.entity';
 
 export const messagesProviders = [

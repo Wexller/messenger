@@ -12,7 +12,7 @@ import {
   IsDate,
   HasMany,
 } from 'sequelize-typescript';
-import { CONVERSATION_TYPES } from '../../core/constants';
+import { CONVERSATION_TYPES } from './conversation.constants';
 import { Message } from '../message/message.entity';
 import { User } from '../user/user.entity';
 import { UserConversation } from '../user-conversation/user-conversation.entity';

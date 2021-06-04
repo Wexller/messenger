@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { USER_CONVERSATION_REPOSITORY } from '../../core/constants';
+import { USER_CONVERSATION_REPOSITORY } from './user-conversation.constants';
 import { UserConversationDto } from './dto/user-conversation.dto';
 import { UserConversation } from './user-conversation.entity';
 

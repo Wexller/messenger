@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsEnum } from 'class-validator';
-import { CONVERSATION_TYPES } from '../../../core/constants';
+import { CONVERSATION_TYPES } from '../conversation.constants';
 
 export class ConversationDto {
   @IsNotEmpty()

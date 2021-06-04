@@ -3,7 +3,7 @@ import { UserConversation } from '../../modules/user-conversation/user-conversat
 import { Conversation } from '../../modules/conversation/conversation.entity';
 import { Message } from '../../modules/message/message.entity';
 import { User } from '../../modules/user/user.entity';
-import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
+import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from './database.constants';
 import { databaseConfig } from './database.config';
 
 export const databaseProviders = [

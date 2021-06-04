@@ -1,5 +1,5 @@
+import { CONVERSATION_REPOSITORY } from './conversation.constants';
 import { Conversation } from './conversation.entity';
-import { CONVERSATION_REPOSITORY } from '../../core/constants';
 
 export const conversationsProviders = [
   {

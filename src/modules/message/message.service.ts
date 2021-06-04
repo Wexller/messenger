@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { MESSAGE_REPOSITORY } from '../../core/constants';
+import { MESSAGE_REPOSITORY } from './message.constants';
 import { RedisPropagatorService } from '../shared/redis-propagator/redis-propagator.service';
 import { User } from '../user/user.entity';
 import { MessageCreateDto } from './dto/message-create.dto';

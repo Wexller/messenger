@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { USER_REPOSITORY } from '../../core/constants';
+import { USER_REPOSITORY } from './user.constants';
 import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
 import { Op } from 'sequelize';

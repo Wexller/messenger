@@ -1,5 +1,5 @@
 import { UserConversation } from './user-conversation.entity';
-import { USER_CONVERSATION_REPOSITORY } from '../../core/constants';
+import { USER_CONVERSATION_REPOSITORY } from './user-conversation.constants';
 
 export const userConversationProviders = [
   {

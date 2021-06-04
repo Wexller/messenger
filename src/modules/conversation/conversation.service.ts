@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CONVERSATION_REPOSITORY, CONVERSATION_TYPES } from '../../core/constants';
+import { CONVERSATION_REPOSITORY } from './conversation.constants';
 import { User } from '../user/user.entity';
+import { CONVERSATION_TYPES } from './conversation.constants';
 import { Conversation } from './conversation.entity';
 import { ConversationDto } from './dto/conversation.dto';
 import { UserService } from '../user/user.service';

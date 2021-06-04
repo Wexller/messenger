@@ -1,5 +1,5 @@
 import { IsNotEmpty, Length } from 'class-validator';
-import { UUID_LENGTH } from '../../../core/constants';
+import { UUID_LENGTH } from '../../../constants';
 import { MessageDto } from './message.dto';
 
 export class MessageCreateDto extends MessageDto {
