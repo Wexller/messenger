@@ -2,11 +2,11 @@ import { Body, Controller, Post, UseGuards, Request, Param, Get, ParseUUIDPipe }
 import { AuthGuard } from '@nestjs/passport';
 import { DoesUserHasAccessToConversation } from '../../core/guards/doesUserHasAccessToConversation.guard';
 import { MessageDto } from './dto/message.dto';
-import { MessagesService } from './messages.service';
+import { MessageService } from './message.service';
 
 @Controller('messages')
-export class MessagesController {
-  constructor(private readonly messageService: MessagesService) {}
+export class MessageController {
+  constructor(private readonly messageService: MessageService) {}
 
   @UseGuards(DoesUserHasAccessToConversation)
   @UseGuards(AuthGuard('jwt'))

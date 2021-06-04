@@ -1,6 +1,6 @@
 import { Table, ForeignKey, Column, Model, IsDate, AllowNull, Default, DataType } from 'sequelize-typescript';
-import { Conversation } from '../conversations/conversation.entity';
-import { User } from '../users/user.entity';
+import { Conversation } from '../conversation/conversation.entity';
+import { User } from '../user/user.entity';
 
 @Table
 export class UserConversation extends Model {

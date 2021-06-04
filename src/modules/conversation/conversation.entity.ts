@@ -13,8 +13,8 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { CONVERSATION_TYPES } from '../../core/constants';
-import { Message } from '../messages/message.entity';
-import { User } from '../users/user.entity';
+import { Message } from '../message/message.entity';
+import { User } from '../user/user.entity';
 import { UserConversation } from '../user-conversation/user-conversation.entity';
 
 @Table

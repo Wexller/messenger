@@ -1,21 +1,21 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { ConversationsModule } from '../conversations/conversations.module';
+import { ConversationModule } from '../conversation/conversation.module';
 import { RedisPropagatorModule } from '../shared/redis-propagator/redis-propagator.module';
 import { messagesProviders } from './message.providers';
-import { MessagesController } from './messages.controller';
-import { MessagesService } from './messages.service';
+import { MessageController } from './message.controller';
+import { MessageService } from './message.service';
 
 @Module({
   imports: [
-    ConversationsModule,
+    ConversationModule,
     JwtModule.register({
       secret: process.env.JWTKEY,
       signOptions: { expiresIn: process.env.TOKEN_EXPIRATION },
     }),
     RedisPropagatorModule,
   ],
-  controllers: [MessagesController],
-  providers: [MessagesService, ...messagesProviders],
+  controllers: [MessageController],
+  providers: [MessageService, ...messagesProviders],
 })
-export class MessagesModule {}
+export class MessageModule {}

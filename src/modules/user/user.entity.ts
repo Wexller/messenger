@@ -13,8 +13,8 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { UserConversation } from '../user-conversation/user-conversation.entity';
-import { Conversation } from '../conversations/conversation.entity';
-import { Message } from '../messages/message.entity';
+import { Conversation } from '../conversation/conversation.entity';
+import { Message } from '../message/message.entity';
 
 @Table
 export class User extends Model {

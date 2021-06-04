@@ -2,13 +2,13 @@ import { Controller, Get, Post, Body, Param, Delete, UseGuards, Request } from '
 import { AuthGuard } from '@nestjs/passport';
 import { DoesUserHasAccessToConversation } from '../../core/guards/doesUserHasAccessToConversation.guard';
 import { DoesUsernameExist } from '../../core/guards/doesUsernameExist.guard';
-import { ConversationsService } from './conversations.service';
+import { ConversationService } from './conversation.service';
 import { ConversationAddUserDto } from './dto/conversation-add-user.dto';
 import { ConversationDto } from './dto/conversation.dto';
 
 @Controller('conversations')
-export class ConversationsController {
-  constructor(private readonly conversationService: ConversationsService) {}
+export class ConversationController {
+  constructor(private readonly conversationService: ConversationService) {}
 
   @UseGuards(AuthGuard('jwt'))
   @Post()

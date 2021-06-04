@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { MESSAGE_REPOSITORY } from '../../core/constants';
 import { RedisPropagatorService } from '../shared/redis-propagator/redis-propagator.service';
-import { User } from '../users/user.entity';
+import { User } from '../user/user.entity';
 import { MessageCreateDto } from './dto/message-create.dto';
 import { MessagesGetDto } from './dto/messages-get.dto';
 import { Message } from './message.entity';
 
 @Injectable()
-export class MessagesService {
+export class MessageService {
   constructor(
     @Inject(MESSAGE_REPOSITORY)
     private readonly messageRepository: typeof Message,

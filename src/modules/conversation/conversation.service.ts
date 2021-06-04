@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CONVERSATION_REPOSITORY, CONVERSATION_TYPES } from '../../core/constants';
-import { User } from '../users/user.entity';
+import { User } from '../user/user.entity';
 import { Conversation } from './conversation.entity';
 import { ConversationDto } from './dto/conversation.dto';
-import { UsersService } from '../users/users.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
-export class ConversationsService {
+export class ConversationService {
   constructor(
     @Inject(CONVERSATION_REPOSITORY)
     private readonly conversationRepository: typeof Conversation,
-    private readonly userService: UsersService,
+    private readonly userService: UserService,
   ) {}
 
   async create(conversation: ConversationDto, users: User[]): Promise<Conversation> {

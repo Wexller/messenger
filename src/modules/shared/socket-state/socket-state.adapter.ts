@@ -1,7 +1,7 @@
 import { INestApplicationContext, WebSocketAdapter } from '@nestjs/common';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import socketIo from 'socket.io';
-import { ConversationsService } from '../../conversations/conversations.service';
+import { ConversationService } from '../../conversation/conversation.service';
 
 import { RedisPropagatorService } from '../redis-propagator/redis-propagator.service';
 
@@ -20,7 +20,7 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
     private readonly app: INestApplicationContext,
     private readonly socketStateService: SocketStateService,
     private readonly redisPropagatorService: RedisPropagatorService,
-    private readonly conversationService: ConversationsService,
+    private readonly conversationService: ConversationService,
   ) {
     super(app);
   }

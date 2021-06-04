@@ -5,10 +5,8 @@ import { User } from './user.entity';
 import { Op } from 'sequelize';
 
 @Injectable()
-export class UsersService {
-  constructor(
-    @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
-  ) {}
+export class UserService {
+  constructor(@Inject(USER_REPOSITORY) private readonly userRepository: typeof User) {}
 
   async create(user: UserDto): Promise<User> {
     return await this.userRepository.create<User>(user);

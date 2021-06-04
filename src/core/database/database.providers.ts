@@ -1,8 +1,8 @@
 import { Sequelize } from 'sequelize-typescript';
 import { UserConversation } from '../../modules/user-conversation/user-conversation.entity';
-import { Conversation } from '../../modules/conversations/conversation.entity';
-import { Message } from '../../modules/messages/message.entity';
-import { User } from '../../modules/users/user.entity';
+import { Conversation } from '../../modules/conversation/conversation.entity';
+import { Message } from '../../modules/message/message.entity';
+import { User } from '../../modules/user/user.entity';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
 import { databaseConfig } from './database.config';
 

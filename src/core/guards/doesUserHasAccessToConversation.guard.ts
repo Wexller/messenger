@@ -1,10 +1,10 @@
 import { CanActivate, ExecutionContext, Injectable, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { ConversationsService } from '../../modules/conversations/conversations.service';
+import { ConversationService } from '../../modules/conversation/conversation.service';
 
 @Injectable()
 export class DoesUserHasAccessToConversation implements CanActivate {
-  constructor(private readonly conversationsService: ConversationsService) {}
+  constructor(private readonly conversationsService: ConversationService) {}
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
