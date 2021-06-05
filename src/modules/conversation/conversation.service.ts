@@ -26,8 +26,11 @@ export class ConversationService {
     return await this.create({ type: CONVERSATION_TYPES.GENERAL, name }, users);
   }
 
-  async createPrivate(name: string, user1: User, user2: User): Promise<Conversation> {
-    return await this.create({ type: CONVERSATION_TYPES.PRIVATE, name }, [user1, user2]);
+  async createPrivate(user1: User, user2: User): Promise<Conversation> {
+    return await this.create({ type: CONVERSATION_TYPES.PRIVATE, name: `${user1.username} - ${user2.username}` }, [
+      user1,
+      user2,
+    ]);
   }
 
   async findAll(userId: string): Promise<Conversation[]> {
@@ -87,10 +90,10 @@ export class ConversationService {
     if (conversations && conversations.length) {
       const numberOfUsers = 2;
       conversation = conversations.find((item) => item.users.length === numberOfUsers);
+    }
 
-      if (!conversation) {
-        conversation = await this.createPrivate(targetUser, requestedUserRecord, targetUserRecord);
-      }
+    if (!conversation) {
+      conversation = await this.createPrivate(requestedUserRecord, targetUserRecord);
     }
 
     return conversation;

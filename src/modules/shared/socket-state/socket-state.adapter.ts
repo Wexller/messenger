@@ -1,4 +1,5 @@
 import { INestApplicationContext, WebSocketAdapter } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import socketIo from 'socket.io';
 import { ConversationService } from '../../conversation/conversation.service';
@@ -21,6 +22,7 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
     private readonly socketStateService: SocketStateService,
     private readonly redisPropagatorService: RedisPropagatorService,
     private readonly conversationService: ConversationService,
+    private readonly jwtService: JwtService,
   ) {
     super(app);
   }
@@ -30,9 +32,9 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
     this.redisPropagatorService.injectSocketServer(server);
 
     server.use(async (socket: AuthenticatedSocket, next) => {
-      const token = socket.handshake.query?.token || socket.handshake.headers?.authorization;
+      const authorization = socket.handshake.headers?.authorization;
 
-      if (!token) {
+      if (!authorization || !authorization.length || !authorization.includes('Bearer ')) {
         socket.auth = null;
 
         // not authenticated connection is still valid
@@ -41,9 +43,14 @@ export class SocketStateAdapter extends IoAdapter implements WebSocketAdapter {
       }
 
       try {
-        // fake auth
+        const [, jwtToken] = authorization.split(' ');
+
+        const user = this.jwtService.verify(jwtToken, {
+          secret: process.env.JWTKEY,
+        });
+
         socket.auth = {
-          userId: 'f13736cc-f8fb-4e91-8078-1104b55c5936',
+          userId: user.id,
         };
 
         return next();
