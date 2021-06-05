@@ -51,6 +51,10 @@ export class Conversation extends Model {
   @BelongsToMany(() => User, () => UserConversation)
   users: User[];
 
-  @HasMany(() => Message)
+  @HasMany(() => Message, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    hooks: true,
+  })
   messages: Message[];
 }

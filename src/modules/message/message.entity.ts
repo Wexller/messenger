@@ -39,9 +39,17 @@ export class Message extends Model {
   @Column(DataType.UUID)
   conversationId: string;
 
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    hooks: true,
+  })
   user: User;
 
-  @BelongsTo(() => Conversation)
+  @BelongsTo(() => Conversation, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    hooks: true,
+  })
   conversation: Conversation;
 }

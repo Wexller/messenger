@@ -34,12 +34,28 @@ export class User extends Model {
   @Column(DataType.STRING)
   password: string;
 
+  @Default('')
+  @Column(DataType.STRING)
+  name: string;
+
+  @Default('')
+  @Column(DataType.STRING)
+  bio: string;
+
   @BelongsToMany(() => Conversation, () => UserConversation)
   conversations: Conversation[];
 
-  @HasMany(() => Message)
+  @HasMany(() => Message, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    hooks: true,
+  })
   messages: Message[];
 
-  @HasMany(() => UserConversation)
+  @HasMany(() => UserConversation, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    hooks: true,
+  })
   userConversations: Message[];
 }
