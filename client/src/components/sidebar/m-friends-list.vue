@@ -136,11 +136,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions('sidebar', ['GET_FRIENDS']),
+    ...mapActions('sidebar', ['getFriends']),
   },
   created() {
     if (!this.friendsList.length) {
-      this.GET_FRIENDS();
+      this.getFriends();
     }
   },
 };

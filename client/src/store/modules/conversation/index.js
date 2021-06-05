@@ -10,7 +10,7 @@ export default {
     type: CONVERSATION_TYPES.PRIVATE,
   },
   actions: {
-    async START_CONVERSATION({ commit }, username) {
+    async startConversation({ commit }, username) {
       const { data, success } = await conversationApi.startConversation(username);
 
       if (success) {

@@ -130,7 +130,7 @@
             <div class="col">
               <!-- Button -->
               <button
-                @click.prevent="logout"
+                @click.prevent="onLogoutClick"
                 type="button"
                 class="btn btn-lg btn-block btn-basic d-flex align-items-center"
               >
@@ -156,9 +156,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions('auth', ['LOGOUT']),
-    logout() {
-      this.LOGOUT();
+    ...mapActions('user', ['logout']),
+    onLogoutClick() {
+      this.logout();
     },
   },
 };

@@ -10,10 +10,10 @@ export default {
     };
   },
   actions: {
-    CHANGE_TAB({ commit }, tab) {
+    changeTab({ commit }, tab) {
       commit('SET_TAB', tab);
     },
-    async GET_FRIENDS({ commit }) {
+    async getFriends({ commit }) {
       const { data, success } = await userApi.getUsers();
 
       if (success && data) {

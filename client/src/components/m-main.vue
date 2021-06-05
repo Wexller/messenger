@@ -36,7 +36,7 @@ export default {
       conversationId: state => state.id,
       conversationType: state => state.type
     }),
-    ...mapState('auth', ['token']),
+    ...mapState('user', ['token']),
     currentContentType() {
       return this.contentType;
     },
@@ -55,17 +55,17 @@ export default {
         }
       }
 
-      this.GET_MESSAGES();
+      this.getMessages();
 
-      this.CHANGE_CONTENT_TYPE(contentType)
+      this.changeContentType(contentType)
     },
     token(token) {
       this.connectToSocket(token)
     }
   },
   methods: {
-    ...mapActions(['CHANGE_CONTENT_TYPE']),
-    ...mapActions('message', ['GET_MESSAGES']),
+    ...mapActions(['changeContentType']),
+    ...mapActions('message', ['getMessages']),
     isContentVisible(contentType) {
       return contentType === this.currentContentType;
     },

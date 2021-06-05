@@ -15,7 +15,7 @@ export default {
     };
   },
   actions: {
-    async SIGN_IN({ commit }, { username, password }) {
+    async signIn({ commit }, { username, password }) {
       commit('START_LOGIN_PROCESS');
       const { data, success } = await authApi.signIn({ username, password });
 
@@ -25,7 +25,7 @@ export default {
 
       commit('STOP_LOGIN_PROCESS');
     },
-    async SIGN_UP({ commit }, { username, password }) {
+    async signUp({ commit }, { username, password }) {
       commit('START_LOGIN_PROCESS');
       const { data, success } = await authApi.signUp({ username, password });
 
@@ -35,7 +35,7 @@ export default {
 
       commit('STOP_LOGIN_PROCESS');
     },
-    LOGOUT({ commit }) {
+    logout({ commit }) {
       commit('LOGOUT_USER');
     },
   },

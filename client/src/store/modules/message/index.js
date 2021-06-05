@@ -24,16 +24,17 @@ export default {
       if (!state.messagesData[key] || !Array.isArray(state.messagesData[key])) {
         Vue.set(state.messagesData, key, []);
       }
+
       state.messagesData[key].push(message);
     },
   },
   actions: {
-    async SEND_MESSAGE({ commit, rootState }, text) {
+    async sendMessage({ commit, rootState }, text) {
       const conversation = rootState['conversation'];
 
       const { data, success } = await messageApi.sendMessage(text, conversation.id);
     },
-    async GET_MESSAGES({ commit, rootState }) {
+    async getMessages({ commit, rootState }) {
       const conversation = rootState['conversation'];
 
       const { data, success } = await messageApi.getMessages(conversation.id);

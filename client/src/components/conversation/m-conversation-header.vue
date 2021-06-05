@@ -99,7 +99,7 @@ export default {
   },
   computed: {
     ...mapState('conversation', ['users', 'type', 'name']),
-    ...mapState('auth', ['userId']),
+    ...mapState('user', ['userId']),
     conversationName() {
       let name;
 

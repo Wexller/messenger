@@ -67,9 +67,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions('message', ['SEND_MESSAGE']),
+    ...mapActions('message', ['sendMessage']),
     async submitHandler() {
-      await this.SEND_MESSAGE(this.text)
+      await this.sendMessage(this.text)
       this.text = ''
     }
   }

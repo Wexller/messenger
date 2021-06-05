@@ -52,9 +52,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions('conversation', ['START_CONVERSATION']),
+    ...mapActions('conversation', ['startConversation']),
     friendClickHandler(username) {
-      this.START_CONVERSATION(username);
+      this.startConversation(username);
     },
   },
 };

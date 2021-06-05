@@ -26,7 +26,7 @@
       <!-- Create group -->
       <li class="nav-item">
         <a
-          @click.prevent="changeTab(tabs.CREATE_CONVERSATION)"
+          @click.prevent="changeNavTab(tabs.CREATE_CONVERSATION)"
           :class="{ active: isTabActive(tabs.CREATE_CONVERSATION) }"
           class="nav-link position-relative p-0 py-xl-3"
           data-toggle="tab"
@@ -41,7 +41,7 @@
       <!-- Friend -->
       <li class="nav-item mt-xl-9">
         <a
-          @click.prevent="changeTab(tabs.FRIENDS_LIST)"
+          @click.prevent="changeNavTab(tabs.FRIENDS_LIST)"
           :class="{ active: isTabActive(tabs.FRIENDS_LIST) }"
           class="nav-link position-relative p-0 py-xl-3"
           data-toggle="tab"
@@ -56,7 +56,7 @@
       <!-- Chats -->
       <li class="nav-item mt-xl-9">
         <a
-          @click.prevent="changeTab(tabs.CONVERSATIONS)"
+          @click.prevent="changeNavTab(tabs.CONVERSATIONS)"
           :class="{ active: isTabActive(tabs.CONVERSATIONS) }"
           class="nav-link position-relative p-0 py-xl-3"
           data-toggle="tab"
@@ -72,7 +72,7 @@
       <!-- Profile -->
       <li class="nav-item mt-xl-9 flex-xl-grow-1">
         <a
-          @click.prevent="changeTab(tabs.PROFILE)"
+          @click.prevent="changeNavTab(tabs.PROFILE)"
           :class="{ active: isTabActive(tabs.PROFILE) }"
           class="nav-link position-relative p-0 py-xl-3"
           data-toggle="tab"
@@ -112,13 +112,13 @@ export default {
     ...mapState('sidebar', ['currentTab']),
   },
   methods: {
-    ...mapActions('sidebar', ['CHANGE_TAB']),
-    changeTab(tab) {
+    ...mapActions('sidebar', ['changeTab']),
+    changeNavTab(tab) {
       if (tab === this.currentTab) {
         return;
       }
 
-      this.CHANGE_TAB(tab);
+      this.changeTab(tab);
     },
     isTabActive(tabName) {
       return tabName === this.currentTab;

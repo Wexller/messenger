@@ -78,7 +78,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['userId']),
+    ...mapState('user', ['userId']),
     isCurrentUserMessage() {
       return this.message.userId === this.userId
     },

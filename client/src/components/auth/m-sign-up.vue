@@ -5,7 +5,7 @@
     <p class="text-center mb-6">Welcome to the official Chat web-client.</p>
 
     <ValidationObserver v-slot="{ handleSubmit }">
-      <form @submit.prevent="handleSubmit(signUp)" class="mb-6">
+      <form @submit.prevent="handleSubmit(onSubmit)" class="mb-6">
         <div class="form-group">
           <ValidationProvider v-slot="{ classes, errors }" name="username" rules="required">
             <label for="username" class="sr-only">Username</label>
@@ -95,12 +95,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions('auth', ['SIGN_UP']),
+    ...mapActions('user', ['signUp']),
     switchAuth() {
       this.$emit('switch', AUTH.SIGN_IN);
     },
-    signUp() {
-      this.SIGN_UP({
+    onSubmit() {
+      this.signUp({
         username: this.username,
         password: this.password,
       });

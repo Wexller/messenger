@@ -16,7 +16,7 @@ export default {
   name: 'App',
   components: { MMain, MLoginForm },
   computed: {
-    ...mapState('auth', ['isUserLoggedIn', 'token']),
+    ...mapState('user', ['isUserLoggedIn', 'token']),
     isLoggedIn() {
       return this.isUserLoggedIn;
     },

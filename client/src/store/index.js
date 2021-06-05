@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import auth from './modules/auth';
+import user from './modules/user';
 import sidebar from './modules/sidebar';
 import conversation from './modules/conversation';
 import message from './modules/message';
@@ -13,7 +13,7 @@ export default new Vuex.Store({
     contentType: CONTENT_TYPES.INTRO,
   },
   actions: {
-    CHANGE_CONTENT_TYPE({ commit }, type) {
+    changeContentType({ commit }, type) {
       commit('SET_CONTENT_TYPE', type);
     },
   },
@@ -22,5 +22,5 @@ export default new Vuex.Store({
       state.contentType = type;
     },
   },
-  modules: { auth, sidebar, conversation, message },
+  modules: { user, sidebar, conversation, message },
 });
