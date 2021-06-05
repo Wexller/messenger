@@ -133,12 +133,22 @@
       <!-- Message -->
 
       <!-- Message -->
-      <m-message
-        v-for="message in messagesList"
-        :key="message.id"
-        :message="message"
-        :avatar-male="avatarMale"
-      />
+
+      <template v-for="(message, idx) in messagesList">
+        <m-message
+          :key="message.id"
+          :message="message"
+          :avatar-male="avatarMale"
+        />
+
+        <template v-if="messagesList[idx + 1]">
+          <m-message-divider
+            v-if="isDateDividerVisible(message.createdAt, messagesList[idx + 1].createdAt)"
+            :text="dateDividerText(messagesList[idx + 1].createdAt)"
+          />
+        </template>
+      </template>
+
       <!-- Message -->
 
       <!-- Message: Typing -->
@@ -156,6 +166,7 @@ import MMessageDivider from "@/components/conversation/m-message-divider";
 import MMessage        from "@/components/message/m-message";
 import MMessageTyping  from "@/components/message/m-message-typing";
 import { mapGetters }  from "vuex";
+import { areDatesInOneDay, getDateTime } from "@/utils/date-time";
 
 export default {
   name: "m-conversation-content",
@@ -174,6 +185,12 @@ export default {
     scrollDown() {
       const el = this.$refs.content;
       el.scrollTop = el.scrollHeight;
+    },
+    isDateDividerVisible(date1, date2) {
+      return !areDatesInOneDay(date1, date2);
+    },
+    dateDividerText(date) {
+      return getDateTime(date, 'Today')
     }
   },
   watch: {

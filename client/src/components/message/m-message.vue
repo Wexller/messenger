@@ -61,7 +61,7 @@
 <script>
 import { mapState } from "vuex";
 import MMessageBody from "@/components/message/m-message-body";
-import { getTime } from "@/utils/date-time";
+import { getDateTime } from "@/utils/date-time";
 
 export default {
   name: "m-message",
@@ -94,7 +94,7 @@ export default {
       this.showDropdown = !this.showDropdown
     },
     dateFormat(timestamp) {
-      return getTime(timestamp);
+      return getDateTime(timestamp);
     }
   }
 };
