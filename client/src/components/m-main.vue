@@ -55,7 +55,9 @@ export default {
         }
       }
 
-      this.getMessages();
+      if (id) {
+        this.getMessages();
+      }
 
       this.changeContentType(contentType)
     },

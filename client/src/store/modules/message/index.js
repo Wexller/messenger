@@ -34,8 +34,12 @@ export default {
 
       const { data, success } = await messageApi.sendMessage(text, conversation.id);
     },
-    async getMessages({ commit, rootState }) {
+    async getMessages({ state, commit, rootState }) {
       const conversation = rootState['conversation'];
+
+      if (state.messagesData[conversation.id]) {
+        return;
+      }
 
       const { data, success } = await messageApi.getMessages(conversation.id);
 

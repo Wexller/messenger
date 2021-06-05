@@ -12,6 +12,7 @@
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "date-and-time": "^1.0.1",
     "socket.io-client": "^2.4.0",
     "vee-validate": "^3.4.6",
     "vue": "^2.6.11",

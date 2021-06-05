@@ -49,7 +49,7 @@
           </div>
 
           <div class="mt-1">
-            <small class="opacity-65">8 mins ago</small>
+            <small class="opacity-65">{{ dateFormat(message.createdAt) }}</small>
           </div>
         </div>
       </template>
@@ -61,6 +61,7 @@
 <script>
 import { mapState } from "vuex";
 import MMessageBody from "@/components/message/m-message-body";
+import { getTime } from "@/utils/date-time";
 
 export default {
   name: "m-message",
@@ -91,6 +92,9 @@ export default {
   methods: {
     dropdownClickHandler() {
       this.showDropdown = !this.showDropdown
+    },
+    dateFormat(timestamp) {
+      return getTime(timestamp);
     }
   }
 };
