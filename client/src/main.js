@@ -4,6 +4,7 @@ import store from './store';
 import { BootstrapVue } from 'bootstrap-vue';
 import VueSocketIo from 'vue-socket.io-extended';
 import io from 'socket.io-client';
+import { ObserveVisibility } from 'vue-observe-visibility';
 
 import './vee-validate';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,6 +21,7 @@ export const eventBus = new Vue();
 
 Vue.use(BootstrapVue);
 Vue.use(VueSocketIo, socket, { store });
+Vue.directive('observe-visibility', ObserveVisibility);
 
 new Vue({
   store,

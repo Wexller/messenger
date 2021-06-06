@@ -2,13 +2,19 @@ import { Controller, Get, Post, Body, Param, Delete, UseGuards, Request } from '
 import { AuthGuard } from '@nestjs/passport';
 import { DoesUserHasAccessToConversation } from '../../core/guards/doesUserHasAccessToConversation.guard';
 import { DoesUsernameExist } from '../../core/guards/doesUsernameExist.guard';
+import { UserConversationService } from '../user-conversation/user-conversation.service';
 import { ConversationService } from './conversation.service';
 import { ConversationAddUserDto } from './dto/conversation-add-user.dto';
+import { ConversationLastMessageUpdateDto } from './dto/conversation-last-message-update.dto';
 import { ConversationDto } from './dto/conversation.dto';
+import { IConversation } from './IConversation';
 
 @Controller('conversations')
 export class ConversationController {
-  constructor(private readonly conversationService: ConversationService) {}
+  constructor(
+    private readonly conversationService: ConversationService,
+    private readonly userConversationService: UserConversationService,
+  ) {}
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
@@ -38,7 +44,7 @@ export class ConversationController {
   @UseGuards(DoesUsernameExist)
   @UseGuards(AuthGuard('jwt'))
   @Post('start')
-  async start(@Request() req) {
+  async start(@Request() req): Promise<IConversation> {
     const userNames = {
       requestedUser: req.user.username,
       targetUser: req.requestedUser.username,
@@ -50,5 +56,19 @@ export class ConversationController {
     };
 
     return await this.conversationService.startConversation(userNames, userRecords);
+  }
+
+  @UseGuards(DoesUserHasAccessToConversation)
+  @UseGuards(AuthGuard('jwt'))
+  @Post('update_last_message_id')
+  async updateLastMessageId(
+    @Body() { conversationId, messageId }: ConversationLastMessageUpdateDto,
+    @Request() req,
+  ): Promise<{ messageId: string }> {
+    return await this.userConversationService.updateLastReadMessage({
+      conversationId,
+      messageId,
+      userId: req.user.id,
+    });
   }
 }

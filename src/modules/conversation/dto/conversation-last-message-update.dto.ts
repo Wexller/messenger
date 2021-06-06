@@ -1,15 +1,12 @@
 import { IsNotEmpty, Length } from 'class-validator';
 import { UUID_LENGTH } from '../../../constants';
 
-export class UserConversationDto {
+export class ConversationLastMessageUpdateDto {
   @IsNotEmpty()
   @Length(UUID_LENGTH)
-  readonly userId: string;
+  readonly conversationId: string;
 
   @IsNotEmpty()
   @Length(UUID_LENGTH)
   readonly messageId: string;
-
-  @IsNotEmpty()
-  readonly conversationId: string;
 }

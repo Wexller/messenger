@@ -9,10 +9,14 @@ export class UserConversationService {
     @Inject(USER_CONVERSATION_REPOSITORY) private readonly userConversationRepository: typeof UserConversation,
   ) {}
 
-  async updateLastReadMessage({ userId, conversationId }: UserConversationDto) {
-    return await this.userConversationRepository.update(
+  async updateLastReadMessage({
+    userId,
+    conversationId,
+    messageId,
+  }: UserConversationDto): Promise<{ messageId: string; conversationId: string }> {
+    await this.userConversationRepository.update(
       {
-        lastReadMessage: new Date(),
+        lastReadMessageId: messageId,
       },
       {
         where: {
@@ -21,5 +25,7 @@ export class UserConversationService {
         },
       },
     );
+
+    return { messageId, conversationId };
   }
 }

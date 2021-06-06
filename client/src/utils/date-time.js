@@ -10,7 +10,7 @@ const patterns = {
  * @param {String} datetime
  * @param {String} todayMessage
  */
-export const getDateTime = (datetime, todayMessage = '') => {
+export const getDateTime = (datetime, todayMessage = null) => {
   const date = new Date(datetime);
 
   return isToday(date)

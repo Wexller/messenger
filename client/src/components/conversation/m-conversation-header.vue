@@ -21,7 +21,7 @@
             </div>
 
             <div class="media-body align-self-center text-truncate">
-              <h6 class="text-truncate mb-n1">{{ conversationName }}</h6>
+              <h6 class="text-truncate mb-n1">{{ conversationTitle }}</h6>
               <span class="badge badge-dot badge-success d-inline-block d-xl-none mr-1"></span>
               <small class="text-muted">Online</small>
             </div>
@@ -86,9 +86,8 @@
   </div>
 </template>
 <script>
-import avatarFemale           from '@/assets/images/avatar_female.jpg';
-import { mapState }           from "vuex";
-import { CONVERSATION_TYPES } from "@/constants";
+import avatarFemale from '@/assets/images/avatar_female.jpg';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'm-conversation-header',
@@ -98,20 +97,10 @@ export default {
     };
   },
   computed: {
-    ...mapState('conversation', ['users', 'type', 'name']),
-    ...mapState('user', ['userId']),
-    conversationName() {
-      let name;
-
-      if (this.type === CONVERSATION_TYPES.PRIVATE) {
-        const { username } = this.users.find((user) => user.id !== this.userId);
-        name = username;
-      } else {
-        name = this.name
-      }
-
-      return name
-    }
-  }
+    ...mapGetters('conversation', ['conversationName']),
+    conversationTitle() {
+      return this.conversationName;
+    },
+  },
 };
 </script>

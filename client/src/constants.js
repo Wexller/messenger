@@ -25,3 +25,5 @@ export const CONVERSATION_TYPES = {
   GENERAL: 'GENERAL',
   PRIVATE: 'PRIVATE',
 };
+
+export const MESSAGE_READ_TIMEOUT = 3000;

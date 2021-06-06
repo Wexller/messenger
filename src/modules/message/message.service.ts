@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { UserConversationService } from '../user-conversation/user-conversation.service';
 import { MESSAGE_REPOSITORY } from './message.constants';
 import { RedisPropagatorService } from '../shared/redis-propagator/redis-propagator.service';
 import { User } from '../user/user.entity';
@@ -12,10 +13,17 @@ export class MessageService {
     @Inject(MESSAGE_REPOSITORY)
     private readonly messageRepository: typeof Message,
     private readonly redisPropagatorService: RedisPropagatorService,
+    private readonly userConversationService: UserConversationService,
   ) {}
 
   async create(message: MessageCreateDto): Promise<Message> {
     const newMessage = await this.messageRepository.create<Message>(message);
+
+    await this.userConversationService.updateLastReadMessage({
+      userId: newMessage.userId,
+      conversationId: newMessage.conversationId,
+      messageId: newMessage.id,
+    });
 
     this.redisPropagatorService.emitToConversation({
       conversationId: newMessage.conversationId,

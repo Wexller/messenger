@@ -12,6 +12,11 @@ export default {
 
       return state.messagesData[conversationId] || [];
     },
+    lastReadMessageIdx(state, getters, rootState, rootGetters) {
+      const lastReadMessageId = rootGetters['conversation/lastReadMessageIdInConversation'];
+
+      return getters.messages.findIndex((m) => m.id === lastReadMessageId);
+    },
   },
   mutations: {
     SET_MESSAGES(state, { messages, key }) {

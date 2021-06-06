@@ -5,6 +5,7 @@ import { CONVERSATION_TYPES } from './conversation.constants';
 import { Conversation } from './conversation.entity';
 import { ConversationDto } from './dto/conversation.dto';
 import { UserService } from '../user/user.service';
+import { IConversation } from './IConversation';
 
 @Injectable()
 export class ConversationService {
@@ -84,9 +85,6 @@ export class ConversationService {
       include: {
         model: User,
         attributes: ['id', 'username', 'name'],
-        through: {
-          attributes: [],
-        },
       },
     });
   }
@@ -94,7 +92,7 @@ export class ConversationService {
   async startConversation(
     { requestedUser, targetUser },
     { requestedUserRecord, targetUserRecord },
-  ): Promise<Conversation> {
+  ): Promise<IConversation> {
     const conversations = await this.getUsersConversation(requestedUser, targetUser);
 
     let conversation;
@@ -109,16 +107,24 @@ export class ConversationService {
       conversation = this.findOneById(created.id);
     }
 
-    return conversation;
+    return {
+      id: conversation.id,
+      name: conversation.name,
+      lastReadMessageId: conversation.users.find((user) => user.id === requestedUserRecord.id).UserConversation
+        .lastReadMessageId,
+      users: conversation.users.map((user) => ({
+        id: user.id,
+        name: user.name,
+        username: user.username,
+      })),
+    };
   }
 
   async getUsersConversation(user1: string, user2: string): Promise<Conversation[]> {
     return await this.conversationRepository.findAll({
       include: {
         model: User,
-        through: {
-          attributes: [],
-        },
+        attributes: ['id', 'username', 'name'],
       },
       attributes: ['id', 'name'],
       where: {

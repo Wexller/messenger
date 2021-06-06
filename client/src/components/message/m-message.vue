@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'message-right': isCurrentUserMessage}" class="message">
+  <div :class="{ 'message-right': isCurrentUserMessage }" class="message">
     <!-- Avatar -->
     <div :class="avatarClasses" class="avatar avatar-sm">
       <img class="avatar-img" :src="avatarMale" alt="" />
@@ -8,15 +8,10 @@
     <!-- Message: body -->
     <m-message-body :is-current-user-message="isCurrentUserMessage">
       <template v-slot:dropdown>
-        <div
-          @click="dropdownClickHandler"
-          :class="{show: showDropdown}"
-          class="dropdown"
-        >
-
+        <div @click="dropdownClickHandler" :class="{ show: showDropdown }" class="dropdown">
           <a
             :class="isCurrentUserMessage ? 'mr-3' : 'ml-3'"
-            class="text-muted opacity-60 "
+            class="text-muted opacity-60"
             href="#"
             data-toggle="dropdown"
             aria-haspopup="true"
@@ -25,10 +20,7 @@
             <i class="fe-more-vertical"></i>
           </a>
 
-          <div
-               :class="{show: showDropdown}"
-               class="dropdown-menu"
-          >
+          <div :class="{ show: showDropdown }" class="dropdown-menu">
             <a class="dropdown-item d-flex align-items-center" href="#">
               Edit <span class="ml-auto fe-edit-3"></span>
             </a>
@@ -51,6 +43,8 @@
           <div class="mt-1">
             <small class="opacity-65">{{ dateFormat(message.createdAt) }}</small>
           </div>
+
+          <div v-if="isReadObservable" v-observe-visibility="visibilityChanged"></div>
         </div>
       </template>
     </m-message-body>
@@ -59,43 +53,55 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import MMessageBody from "@/components/message/m-message-body";
-import { getDateTime } from "@/utils/date-time";
+import { mapGetters, mapState } from 'vuex';
+import MMessageBody from '@/components/message/m-message-body';
+import { getDateTime } from '@/utils/date-time';
 
 export default {
-  name: "m-message",
+  name: 'm-message',
   components: { MMessageBody },
   props: {
     avatarMale: {},
     message: {
       required: true,
-      type: Object
-    }
+      type: Object,
+    },
+    idx: {
+      required: true,
+      type: Number,
+    },
+    isReadObservable: {
+      default: false,
+      type: Boolean,
+    },
   },
   data() {
     return {
-      showDropdown: false
-    }
+      showDropdown: false,
+    };
   },
   computed: {
     ...mapState('user', ['userId']),
     isCurrentUserMessage() {
-      return this.message.userId === this.userId
+      return this.message.userId === this.userId;
     },
     avatarClasses() {
-      return this.isCurrentUserMessage
-        ? 'd-none d-lg-block ml-4 ml-lg-5'
-        : 'mr-4 mr-lg-5'
-    }
+      return this.isCurrentUserMessage ? 'd-none d-lg-block ml-4 ml-lg-5' : 'mr-4 mr-lg-5';
+    },
   },
   methods: {
     dropdownClickHandler() {
-      this.showDropdown = !this.showDropdown
+      this.showDropdown = !this.showDropdown;
     },
     dateFormat(timestamp) {
       return getDateTime(timestamp);
-    }
-  }
+    },
+    visibilityChanged(isVisible) {
+      if (isVisible) {
+        this.$emit('messageVisible', this.message.id);
+      }
+    },
+  },
+  mounted() {},
 };
 </script>

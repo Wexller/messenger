@@ -1,4 +1,15 @@
-import { Table, ForeignKey, Column, Model, IsDate, AllowNull, Default, DataType } from 'sequelize-typescript';
+import {
+  Table,
+  ForeignKey,
+  Column,
+  Model,
+  IsDate,
+  AllowNull,
+  Default,
+  DataType,
+  IsUUID,
+  Sequelize,
+} from 'sequelize-typescript';
 import { Conversation } from '../conversation/conversation.entity';
 import { User } from '../user/user.entity';
 
@@ -12,9 +23,9 @@ export class UserConversation extends Model {
   @Column(DataType.UUID)
   conversationId: string;
 
-  @IsDate
   @AllowNull(false)
-  @Default(new Date())
-  @Column(DataType.DATE)
-  lastReadMessage: Date;
+  @Default(Sequelize.literal('uuid_generate_v4()'))
+  @IsUUID(4)
+  @Column(DataType.UUID)
+  lastReadMessageId: Date;
 }
