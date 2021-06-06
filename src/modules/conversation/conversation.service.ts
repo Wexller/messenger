@@ -79,6 +79,18 @@ export class ConversationService {
     });
   }
 
+  async findOneById(id: string) {
+    return await this.conversationRepository.findByPk(id, {
+      include: {
+        model: User,
+        attributes: ['id', 'username', 'name'],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+  }
+
   async startConversation(
     { requestedUser, targetUser },
     { requestedUserRecord, targetUserRecord },
@@ -93,7 +105,8 @@ export class ConversationService {
     }
 
     if (!conversation) {
-      conversation = await this.createPrivate(requestedUserRecord, targetUserRecord);
+      const created = await this.createPrivate(requestedUserRecord, targetUserRecord);
+      conversation = this.findOneById(created.id);
     }
 
     return conversation;
