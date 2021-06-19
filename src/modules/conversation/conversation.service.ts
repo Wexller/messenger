@@ -54,6 +54,11 @@ export class ConversationService {
     }
 
     const userToAdd = await this.userService.findOneByUsername(username);
+
+    if (!userToAdd) {
+      return false;
+    }
+
     await conversation.$add('users', userToAdd);
 
     return true;

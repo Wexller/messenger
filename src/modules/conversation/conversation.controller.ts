@@ -33,7 +33,7 @@ export class ConversationController {
   @UseGuards(AuthGuard('jwt'))
   @Post('add_user')
   async addUser(@Body() { conversationId, username }: ConversationAddUserDto) {
-    return this.conversationService.addUser(conversationId, username);
+    return await this.conversationService.addUser(conversationId, username);
   }
 
   @Delete(':id')
