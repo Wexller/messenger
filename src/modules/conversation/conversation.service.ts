@@ -1,12 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { MessageService } from '../message/message.service';
 import { CONVERSATION_REPOSITORY } from './conversation.constants';
 import { User } from '../user/user.entity';
 import { CONVERSATION_TYPES } from './conversation.constants';
 import { Conversation } from './conversation.entity';
 import { ConversationDto } from './dto/conversation.dto';
 import { UserService } from '../user/user.service';
-import { IConversation } from './IConversation';
+import { IConversation } from './interfaces/conversation.interface';
 
 @Injectable()
 export class ConversationService {
@@ -14,7 +13,6 @@ export class ConversationService {
     @Inject(CONVERSATION_REPOSITORY)
     private readonly conversationRepository: typeof Conversation,
     private readonly userService: UserService,
-    private readonly messageService: MessageService,
   ) {}
 
   async create(conversation: ConversationDto, users: User[]): Promise<Conversation> {

@@ -7,7 +7,7 @@ import { ConversationService } from './conversation.service';
 import { ConversationAddUserDto } from './dto/conversation-add-user.dto';
 import { ConversationLastMessageUpdateDto } from './dto/conversation-last-message-update.dto';
 import { ConversationDto } from './dto/conversation.dto';
-import { IConversation } from './IConversation';
+import { IConversation } from './interfaces/conversation.interface';
 
 @Controller('conversations')
 export class ConversationController {
