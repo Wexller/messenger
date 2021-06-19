@@ -1,0 +1,4 @@
+export enum CONVERSATION_TYPES {
+  GENERAL = 'GENERAL',
+  PRIVATE = 'PRIVATE',
+}
