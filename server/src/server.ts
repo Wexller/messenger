@@ -2,6 +2,7 @@ import 'dotenv/config';
 import * as express from 'express';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
+import sequelize from './core/database/database';
 
 import router from './router';
 
@@ -24,6 +25,7 @@ app.use('/api', router);
 
 app.use(loggerMiddleware);
 
-app.listen(process.env.SERVER_PORT, () => {
+app.listen(process.env.SERVER_PORT, async () => {
+  await sequelize.sync();
   console.log(`Server running at port ${process.env.SERVER_PORT}`);
 });
