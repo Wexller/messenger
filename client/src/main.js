@@ -23,6 +23,10 @@ Vue.use(BootstrapVue);
 Vue.use(VueSocketIo, socket, { store });
 Vue.directive('observe-visibility', ObserveVisibility);
 
+Vue.directive('visible', function (el, binding) {
+  el.style.visibility = !!binding.value ? 'visible' : 'hidden';
+});
+
 new Vue({
   store,
   render: (h) => h(App),

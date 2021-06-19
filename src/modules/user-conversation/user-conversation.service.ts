@@ -13,10 +13,12 @@ export class UserConversationService {
     userId,
     conversationId,
     messageId,
+    lastReadMessageAt,
   }: UserConversationDto): Promise<{ messageId: string; conversationId: string }> {
     await this.userConversationRepository.update(
       {
         lastReadMessageId: messageId,
+        lastReadMessageAt,
       },
       {
         where: {
@@ -27,5 +29,18 @@ export class UserConversationService {
     );
 
     return { messageId, conversationId };
+  }
+
+  async findLastReadMessage({
+    userId,
+    conversationId,
+  }): Promise<{ lastReadMessageId: string; lastReadMessageAt: Date }> {
+    return await this.userConversationRepository.findOne({
+      where: {
+        userId,
+        conversationId,
+      },
+      attributes: ['lastReadMessageId', 'lastReadMessageAt'],
+    });
   }
 }

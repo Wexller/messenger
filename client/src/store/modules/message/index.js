@@ -1,5 +1,6 @@
 import { messageApi } from '@/api';
 import Vue from 'vue';
+import { LOAD_MESSAGES } from '@/constants';
 
 export default {
   namespaced: true,
@@ -17,6 +18,16 @@ export default {
 
       return getters.messages.findIndex((m) => m.id === lastReadMessageId);
     },
+    currentFirstMessage: (state, getters) => getters.messages[0],
+    currentLastMessage: (state, getters) => getters.messages[getters.messages.length - 1],
+    isFirstMessageExists(state, getters, rootState, rootGetters) {
+      const messageId = rootGetters['conversation/firstMessageIdInConversation'];
+      return getters.currentFirstMessage?.id === messageId;
+    },
+    isLastMessageExists(state, getters, rootState, rootGetters) {
+      const messageId = rootGetters['conversation/lastMessageIdInConversation'];
+      return getters.currentLastMessage?.id === messageId;
+    },
   },
   mutations: {
     SET_MESSAGES(state, { messages, key }) {
@@ -31,6 +42,22 @@ export default {
       }
 
       state.messagesData[key].push(message);
+    },
+    APPEND_MESSAGES(state, { messages, conversationId }) {
+      if (!state.messagesData[conversationId] || !Array.isArray(state.messagesData[conversationId])) {
+        Vue.set(state.messagesData, key, []);
+      }
+
+      state.messagesData[conversationId].push(...messages);
+    },
+    PREPEND_MESSAGES(state, { messages, conversationId }) {
+      if (!state.messagesData[conversationId] || !Array.isArray(state.messagesData[conversationId])) {
+        Vue.set(state.messagesData, key, []);
+      }
+
+      const oldMessages = state.messagesData[conversationId];
+
+      state.messagesData[conversationId] = [...messages, ...oldMessages];
     },
   },
   actions: {
@@ -50,6 +77,33 @@ export default {
 
       if (success) {
         commit('SET_MESSAGES', { messages: data, key: conversation.id });
+      }
+    },
+    async loadMoreMessages({ commit, getters, rootState }, loadType) {
+      const { NEW, OLD } = LOAD_MESSAGES;
+
+      const conversation = rootState['conversation'];
+
+      if (loadType === NEW) {
+        const { success, data: messages } = await messageApi.getNewMessages(
+          conversation.id,
+          getters.currentLastMessage.id
+        );
+
+        if (success) {
+          commit('APPEND_MESSAGES', { messages, conversationId: conversation.id });
+        }
+      }
+
+      if (loadType === OLD) {
+        const { success, data: messages } = await messageApi.getOldMessages(
+          conversation.id,
+          getters.currentFirstMessage.id
+        );
+
+        if (success) {
+          commit('PREPEND_MESSAGES', { messages, conversationId: conversation.id });
+        }
       }
     },
     socket_newMessage({ commit }, message) {

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConversationModule } from '../conversation/conversation.module';
 import { RedisPropagatorModule } from '../shared/redis-propagator/redis-propagator.module';
@@ -9,15 +9,16 @@ import { MessageService } from './message.service';
 
 @Module({
   imports: [
-    ConversationModule,
     JwtModule.register({
       secret: process.env.JWTKEY,
       signOptions: { expiresIn: process.env.TOKEN_EXPIRATION },
     }),
     RedisPropagatorModule,
     UserConversationModule,
+    forwardRef(() => ConversationModule),
   ],
   controllers: [MessageController],
   providers: [MessageService, ...messagesProviders],
+  exports: [MessageService],
 })
 export class MessageModule {}

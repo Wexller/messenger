@@ -1,1 +1,3 @@
 export const UUID_LENGTH = 36;
+
+export const UUID_V4_DEFAULT = '00000000-0000-4000-8000-000000000000';

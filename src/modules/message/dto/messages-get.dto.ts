@@ -5,4 +5,8 @@ export class MessagesGetDto {
   @IsNotEmpty()
   @Length(UUID_LENGTH)
   readonly conversationId: string;
+
+  @IsNotEmpty()
+  @Length(UUID_LENGTH)
+  readonly userId: string;
 }

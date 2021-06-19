@@ -69,6 +69,7 @@ export class ConversationController {
       conversationId,
       messageId,
       userId: req.user.id,
+      lastReadMessageAt: new Date(),
     });
   }
 }

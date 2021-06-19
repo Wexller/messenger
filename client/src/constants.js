@@ -26,4 +26,9 @@ export const CONVERSATION_TYPES = {
   PRIVATE: 'PRIVATE',
 };
 
+export const LOAD_MESSAGES = {
+  OLD: 'OLD',
+  NEW: 'NEW',
+};
+
 export const MESSAGE_READ_TIMEOUT = 3000;

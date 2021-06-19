@@ -15,10 +15,10 @@
 import MNavigation from '@/components/m-navigation';
 import MSidebar from '@/components/sidebar/m-sidebar';
 import MConversation from '@/components/conversation/m-conversation';
-import avatarMale                            from '@/assets/images/avatar_male.jpg';
+import avatarMale from '@/assets/images/avatar_male.jpg';
 import { CONTENT_TYPES, CONVERSATION_TYPES } from '@/constants';
-import { mapActions, mapState }              from 'vuex';
-import MIntro                   from '@/components/m-intro';
+import { mapActions, mapState } from 'vuex';
+import MIntro from '@/components/m-intro';
 
 export default {
   name: 'm-main',
@@ -27,14 +27,14 @@ export default {
     return {
       avatarMale,
       contentTypes: CONTENT_TYPES,
-      socket: null
+      socket: null,
     };
   },
   computed: {
     ...mapState(['contentType']),
     ...mapState('conversation', {
-      conversationId: state => state.id,
-      conversationType: state => state.type
+      conversationId: (state) => state.id,
+      conversationType: (state) => state.type,
     }),
     ...mapState('user', ['token']),
     currentContentType() {
@@ -42,28 +42,25 @@ export default {
     },
   },
   watch: {
+    // TODO: Refactor
     conversationId(id) {
       let contentType = CONTENT_TYPES.INTRO;
 
       if (id) {
         if (this.conversationType === CONVERSATION_TYPES.PRIVATE) {
-          contentType = CONTENT_TYPES.PRIVATE_CONVERSATION
+          contentType = CONTENT_TYPES.PRIVATE_CONVERSATION;
         }
 
         if (this.conversationType === CONVERSATION_TYPES.GENERAL) {
-          contentType = CONTENT_TYPES.GENERAL_CONVERSATION
+          contentType = CONTENT_TYPES.GENERAL_CONVERSATION;
         }
       }
 
-      if (id) {
-        this.getMessages();
-      }
-
-      this.changeContentType(contentType)
+      this.changeContentType(contentType);
     },
     token(token) {
-      this.connectToSocket(token)
-    }
+      this.connectToSocket(token);
+    },
   },
   methods: {
     ...mapActions(['changeContentType']),
@@ -78,16 +75,16 @@ export default {
             Authorization: `Bearer ${token}`,
           },
         },
-      }
+      };
 
       this.$socket.client.connect();
-    }
+    },
   },
   created() {
-    this.connectToSocket(this.token)
+    this.connectToSocket(this.token);
   },
   destroyed() {
-    this.$socket.client.close()
-  }
+    this.$socket.client.close();
+  },
 };
 </script>

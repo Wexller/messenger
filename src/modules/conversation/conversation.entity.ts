@@ -11,6 +11,7 @@ import {
   BelongsToMany,
   IsDate,
   HasMany,
+  ForeignKey,
 } from 'sequelize-typescript';
 import { CONVERSATION_TYPES } from './conversation.constants';
 import { Message } from '../message/message.entity';
@@ -57,4 +58,14 @@ export class Conversation extends Model {
     hooks: true,
   })
   messages: Message[];
+
+  @IsUUID(4)
+  @ForeignKey(() => Message)
+  @Column(DataType.UUID)
+  firstMessageId;
+
+  @IsUUID(4)
+  @ForeignKey(() => Message)
+  @Column(DataType.UUID)
+  lastMessageId;
 }

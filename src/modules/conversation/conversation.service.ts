@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { MessageService } from '../message/message.service';
 import { CONVERSATION_REPOSITORY } from './conversation.constants';
 import { User } from '../user/user.entity';
 import { CONVERSATION_TYPES } from './conversation.constants';
@@ -13,6 +14,7 @@ export class ConversationService {
     @Inject(CONVERSATION_REPOSITORY)
     private readonly conversationRepository: typeof Conversation,
     private readonly userService: UserService,
+    private readonly messageService: MessageService,
   ) {}
 
   async create(conversation: ConversationDto, users: User[]): Promise<Conversation> {
@@ -59,14 +61,21 @@ export class ConversationService {
     return true;
   }
 
-  async updateLastMessage(conversationId: string, message = 'Message'): Promise<[number, Conversation[]]> {
-    return await this.conversationRepository.update(
-      {
-        lastMessageText: message,
-        lastMessageAt: new Date(),
-      },
-      { where: { id: conversationId } },
-    );
+  async updateFirstAndLastMessages({ conversationId: id, messageId }): Promise<[number, Conversation[]]> {
+    const { firstMessageId } = await this.conversationRepository.findByPk(id);
+
+    let values;
+
+    if (firstMessageId) {
+      values = { lastMessageId: messageId };
+    } else {
+      values = {
+        firstMessageId: messageId,
+        lastMessageId: messageId,
+      };
+    }
+
+    return await this.conversationRepository.update(values, { where: { id } });
   }
 
   async remove(id: string): Promise<number> {
@@ -86,6 +95,7 @@ export class ConversationService {
         model: User,
         attributes: ['id', 'username', 'name'],
       },
+      attributes: ['id', 'name', 'firstMessageId', 'lastMessageId'],
     });
   }
 
@@ -104,14 +114,18 @@ export class ConversationService {
 
     if (!conversation) {
       const created = await this.createPrivate(requestedUserRecord, targetUserRecord);
-      conversation = this.findOneById(created.id);
+      conversation = await this.findOneById(created.id);
     }
+
+    const lastReadMessageId = conversation.users.find((user) => user.id === requestedUserRecord.id).UserConversation
+      .lastReadMessageId;
 
     return {
       id: conversation.id,
       name: conversation.name,
-      lastReadMessageId: conversation.users.find((user) => user.id === requestedUserRecord.id).UserConversation
-        .lastReadMessageId,
+      lastReadMessageId: lastReadMessageId ?? null,
+      firstMessageId: conversation.firstMessageId,
+      lastMessageId: conversation.lastMessageId,
       users: conversation.users.map((user) => ({
         id: user.id,
         name: user.name,
@@ -126,7 +140,7 @@ export class ConversationService {
         model: User,
         attributes: ['id', 'username', 'name'],
       },
-      attributes: ['id', 'name'],
+      attributes: ['id', 'name', 'firstMessageId', 'lastMessageId'],
       where: {
         type: CONVERSATION_TYPES.PRIVATE,
         '$users.username$': [user1, user2],
