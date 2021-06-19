@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { DEVELOPMENT, PRODUCTION, TEST } from './database.constants';
 import { IDatabaseConfig } from './interfaces/dbConfig.interface';
 
