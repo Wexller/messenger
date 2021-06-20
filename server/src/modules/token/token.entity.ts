@@ -30,7 +30,7 @@ export default class Token extends Model {
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  token: string;
+  refreshToken: string;
 
   @BelongsTo(() => User)
   user: User;
