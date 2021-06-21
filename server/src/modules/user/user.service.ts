@@ -1,7 +1,7 @@
 import { hash, compare } from 'bcrypt';
 import tokenService from '../token/token.service';
 import ApiException from '../../core/exceptions/api.exception';
-import UserAuthDto from './dto/userAuthDto';
+import UserAuthDto from './dto/userAuth.dto';
 import UserDataDto from './dto/userData.dto';
 import IAuthUser from './interfaces/authUser.interface';
 import { INCORRECT_USER_DATA, SALT_ROUNDS } from './user.constants';
