@@ -2,6 +2,7 @@ import { Router } from 'express';
 import validationMiddleware from '../core/middleware/validation.middleware';
 import authMiddleware from '../core/middleware/auth.middleware';
 import FriendDto from '../modules/friend/dto/friend.dto';
+import FriendDeleteDto from '../modules/friend/dto/friendDelete.dto';
 import UserAuthDto from '../modules/user/dto/userAuth.dto';
 import UserController from '../modules/user/user.controller';
 import FriendController from '../modules/friend/friend.controller';
@@ -17,6 +18,6 @@ router.get('/user/refresh', UserController.refreshToken);
 // Friends
 router.get('/friend', authMiddleware, FriendController.getFriends);
 router.post('/friend', authMiddleware, validationMiddleware(FriendDto), FriendController.addFriend);
-router.delete('/friend', authMiddleware, validationMiddleware(FriendDto), FriendController.removeFriend);
+router.delete('/friend', authMiddleware, validationMiddleware(FriendDeleteDto), FriendController.deleteFriend);
 
 export default router;

@@ -41,7 +41,7 @@ class FriendService {
     return true;
   }
 
-  async removeFriend(userId: string, friendId: string): Promise<boolean> {
+  async deleteFriend(userId: string, friendId: string): Promise<boolean> {
     const result = await Friend.destroy({ where: { userId, friendId } });
     return result > 0;
   }

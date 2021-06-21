@@ -20,18 +20,18 @@ class FriendController {
     }
   }
 
-  async removeFriend(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+  async deleteFriend(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       // @ts-ignore
       const { id: userId } = req.user;
-      const { friendUsername } = req.body;
+      const { userId: friendId } = req.body;
 
       if (!userId) {
         return next(ApiException.UnauthorizedError());
       }
 
-      const isRemoved = await FriendService.removeFriend(userId, friendUsername);
-      return res.json(isRemoved);
+      const isDeleted = await FriendService.deleteFriend(userId, friendId);
+      return res.json(isDeleted);
     } catch (e) {
       next(e);
     }
