@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import * as express from 'express';
 import sequelize from './core/database/database';
-import plugins from './plugins';
+import { initPlugins } from './initPlugins';
 
 const app = express();
 
-plugins(app);
+initPlugins(app);
 
 app.listen(process.env.SERVER_PORT, async () => {
   await sequelize.sync();

@@ -2,11 +2,11 @@ import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 import { Application } from 'express';
-import loggerMiddleware from './core/middleware/logger.middleware';
-import errorMiddleware from './core/middleware/error.middleware';
+import { loggerMiddleware } from './core/middleware/logger.middleware';
+import { errorMiddleware } from './core/middleware/error.middleware';
 import router from './router';
 
-export default function (app: Application) {
+export const initPlugins = (app: Application): void => {
   app.use(express.json());
   app.use(cookieParser());
   app.use(
@@ -20,4 +20,4 @@ export default function (app: Application) {
   app.use('/api', router);
 
   app.use(errorMiddleware);
-}
+};

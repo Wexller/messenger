@@ -1,9 +1,9 @@
-import ApiException from '../../core/exceptions/api.exception';
+import { ApiException } from '../exceptions/api.exception';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { RequestHandler, Request, Response, NextFunction } from 'express';
 
-export default function validationMiddleware<T>(type: any): RequestHandler {
+export const validationMiddleware = <T>(type: any): RequestHandler => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const errors = await validate(plainToClass(type, req.body));
 
@@ -19,4 +19,4 @@ export default function validationMiddleware<T>(type: any): RequestHandler {
       next();
     }
   };
-}
+};

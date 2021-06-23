@@ -1,6 +1,6 @@
-import IUser from './user.interface';
+import { IUser } from './user.interface';
 
-export default interface IAuthUser extends IUser {
+export interface IAuthUser extends IUser {
   accessToken: string;
   refreshToken: string;
 }

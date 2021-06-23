@@ -1,7 +1,7 @@
-import ApiException from '../../core/exceptions/api.exception';
-import IUser from '../user/interfaces/user.interface';
-import User from '../user/user.entity';
-import Friend from './friend.entity';
+import { ApiException } from '../../core/exceptions/api.exception';
+import { IUser } from '../user/interfaces/user.interface';
+import { User } from '../user/user.entity';
+import { Friend } from './friend.entity';
 
 class FriendService {
   async addFriend(userId: string, friendUsername: string): Promise<boolean> {
@@ -62,4 +62,4 @@ class FriendService {
   }
 }
 
-export default new FriendService();
+export const friendService = new FriendService();

@@ -1,4 +1,4 @@
-export default interface IGeneratedTokens {
-  accessToken: string
-  refreshToken: string
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
 }

@@ -12,14 +12,14 @@ import {
   Sequelize,
   Table,
 } from 'sequelize-typescript';
-import Conversation from '../conversation/conversation.entity';
-import Friend from '../friend/friend.entity';
-import Message from '../message/message.entity';
-import Token from '../token/token.entity';
-import UserConversation from '../user-conversations/user-conversation.entity';
+import { Conversation } from '../conversation/conversation.entity';
+import { Friend } from '../friend/friend.entity';
+import { Message } from '../message/message.entity';
+import { Token } from '../token/token.entity';
+import { UserConversation } from '../user-conversations/user-conversation.entity';
 
 @Table
-export default class User extends Model {
+export class User extends Model {
   @PrimaryKey
   @AllowNull(false)
   @Default(Sequelize.literal('uuid_generate_v4()'))

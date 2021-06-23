@@ -1,6 +1,6 @@
-import IToken from '../interfaces/token.interface';
+import { IToken } from '../interfaces/token.interface';
 
-export default class TokenDto implements IToken {
+export class TokenDto implements IToken {
   id: string;
   userId: string;
   refreshToken: string;

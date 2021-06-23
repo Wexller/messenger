@@ -11,11 +11,11 @@ import {
   ForeignKey,
   BelongsTo,
 } from 'sequelize-typescript';
-import Conversation from '../conversation/conversation.entity';
-import User from '../user/user.entity';
+import { Conversation } from '../conversation/conversation.entity';
+import { User } from '../user/user.entity';
 
 @Table
-export default class Message extends Model {
+export class Message extends Model {
   @PrimaryKey
   @AllowNull(false)
   @Default(Sequelize.literal('uuid_generate_v4()'))

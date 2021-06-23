@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import ApiException from '../../core/exceptions/api.exception';
-import FriendService from './friend.service';
+import { ApiException } from '../../core/exceptions/api.exception';
+import { friendService } from './friend.service';
 
 class FriendController {
   async addFriend(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
@@ -13,7 +13,7 @@ class FriendController {
         return next(ApiException.UnauthorizedError());
       }
 
-      const isAdded = await FriendService.addFriend(userId, username);
+      const isAdded = await friendService.addFriend(userId, username);
       return res.json(isAdded);
     } catch (e) {
       next(e);
@@ -30,7 +30,7 @@ class FriendController {
         return next(ApiException.UnauthorizedError());
       }
 
-      const isDeleted = await FriendService.deleteFriend(userId, friendId);
+      const isDeleted = await friendService.deleteFriend(userId, friendId);
       return res.json(isDeleted);
     } catch (e) {
       next(e);
@@ -46,7 +46,7 @@ class FriendController {
         return next(ApiException.UnauthorizedError());
       }
 
-      const friends = await FriendService.getFriends(userId);
+      const friends = await friendService.getFriends(userId);
       return res.json(friends);
     } catch (e) {
       next(e);
@@ -54,4 +54,4 @@ class FriendController {
   }
 }
 
-export default new FriendController();
+export const friendController = new FriendController();

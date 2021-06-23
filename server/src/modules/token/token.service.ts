@@ -1,9 +1,9 @@
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
-import UserDataDto from '../user/dto/userData.dto';
-import User from '../user/user.entity';
-import TokenDto from './dto/token.dto';
-import ITokens from './interfaces/generatedTokens.interface';
-import Token from './token.entity';
+import { UserDataDto } from '../user/dto/userData.dto';
+import { User } from '../user/user.entity';
+import { TokenDto } from './dto/token.dto';
+import { ITokens } from './interfaces/generatedTokens.interface';
+import { Token } from './token.entity';
 
 class TokenService {
   generateTokens(payload: UserDataDto): ITokens {
@@ -65,4 +65,4 @@ class TokenService {
   }
 }
 
-export default new TokenService();
+export const tokenService = new TokenService();

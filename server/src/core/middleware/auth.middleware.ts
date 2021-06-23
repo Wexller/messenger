@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import tokenService from '../../modules/token/token.service';
-import ApiException from '../exceptions/api.exception';
+import { tokenService } from '../../modules/token/token.service';
+import { ApiException } from '../exceptions/api.exception';
 
-export default function (req: Request, res: Response, next: NextFunction) {
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
@@ -24,4 +24,4 @@ export default function (req: Request, res: Response, next: NextFunction) {
   } catch (e) {
     return next(ApiException.UnauthorizedError());
   }
-}
+};

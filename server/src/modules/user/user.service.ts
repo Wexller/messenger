@@ -1,11 +1,11 @@
 import { hash, compare } from 'bcrypt';
-import tokenService from '../token/token.service';
-import ApiException from '../../core/exceptions/api.exception';
-import UserAuthDto from './dto/userAuth.dto';
-import UserDataDto from './dto/userData.dto';
-import IAuthUser from './interfaces/authUser.interface';
+import { tokenService } from '../token/token.service';
+import { ApiException } from '../../core/exceptions/api.exception';
+import { UserAuthDto } from './dto/userAuth.dto';
+import { UserDataDto } from './dto/userData.dto';
+import { IAuthUser } from './interfaces/authUser.interface';
 import { INCORRECT_USER_DATA, SALT_ROUNDS } from './user.constants';
-import User from './user.entity';
+import { User } from './user.entity';
 
 class UserService {
   async registration({ username, password }: UserAuthDto): Promise<IAuthUser> {
@@ -70,4 +70,4 @@ class UserService {
   }
 }
 
-export default new UserService();
+export const userService = new UserService();

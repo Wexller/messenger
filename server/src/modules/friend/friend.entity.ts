@@ -11,10 +11,10 @@ import {
   Sequelize,
   Table,
 } from 'sequelize-typescript';
-import User from '../user/user.entity';
+import { User } from '../user/user.entity';
 
 @Table
-export default class Friend extends Model {
+export class Friend extends Model {
   @PrimaryKey
   @AllowNull(false)
   @Default(Sequelize.literal('uuid_generate_v4()'))

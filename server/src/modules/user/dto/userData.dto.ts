@@ -1,7 +1,7 @@
 import { IsString } from 'class-validator';
-import IUser from '../interfaces/user.interface';
+import { IUser } from '../interfaces/user.interface';
 
-export default class UserDataDto {
+export class UserDataDto {
   @IsString()
   id: string;
 

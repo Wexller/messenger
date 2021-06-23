@@ -13,13 +13,13 @@ import {
   Sequelize,
   Table,
 } from 'sequelize-typescript';
-import Message from '../message/message.entity';
-import UserConversation from '../user-conversations/user-conversation.entity';
-import User from '../user/user.entity';
+import { Message } from '../message/message.entity';
+import { UserConversation } from '../user-conversations/user-conversation.entity';
+import { User } from '../user/user.entity';
 import { CONVERSATION_TYPES } from './conversation.constants';
 
 @Table
-export default class Conversation extends Model {
+export class Conversation extends Model {
   @PrimaryKey
   @AllowNull(false)
   @Default(Sequelize.literal('uuid_generate_v4()'))

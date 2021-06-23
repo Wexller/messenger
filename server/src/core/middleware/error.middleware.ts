@@ -1,8 +1,13 @@
-import ApiException from '../exceptions/api.exception';
+import { ApiException } from '../exceptions/api.exception';
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 
 // noinspection JSUnusedLocalSymbols
-export default function (err: ErrorRequestHandler, req: Request, res: Response, next: NextFunction): Response {
+export const errorMiddleware = (
+  err: ErrorRequestHandler,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Response => {
   console.log(err);
 
   if (err instanceof ApiException) {
@@ -10,4 +15,4 @@ export default function (err: ErrorRequestHandler, req: Request, res: Response, 
   }
 
   return res.status(500).json({ message: 'Server error' });
-}
+};

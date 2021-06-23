@@ -11,11 +11,11 @@ import {
 } from 'sequelize-typescript';
 
 import { UUID_V4_DEFAULT } from '../../constants';
-import Conversation from '../conversation/conversation.entity';
-import User from '../user/user.entity';
+import { Conversation } from '../conversation/conversation.entity';
+import { User } from '../user/user.entity';
 
 @Table
-export default class UserConversation extends Model {
+export class UserConversation extends Model {
   @ForeignKey(() => User)
   @Column(DataType.UUID)
   userId: string;

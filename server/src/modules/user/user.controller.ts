@@ -1,6 +1,6 @@
-import UserAuthDto from './dto/userAuth.dto';
+import { UserAuthDto } from './dto/userAuth.dto';
 import { COOKIE_MAX_AGE, REFRESH_TOKEN } from './user.constants';
-import userService from './user.service';
+import { userService } from './user.service';
 import { Request, Response, NextFunction } from 'express';
 
 class UserController {
@@ -51,4 +51,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export const userController = new UserController();

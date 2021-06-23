@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-export default class FriendDeleteDto {
+export class FriendDeleteDto {
   @IsNotEmpty()
   @IsString()
   @IsUUID(4)
