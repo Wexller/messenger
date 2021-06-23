@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { validationMiddleware } from '../core/middleware/validation.middleware';
 import { authMiddleware } from '../core/middleware/auth.middleware';
+import { conversationController } from '../modules/conversation/conversation.controller';
+import { ConversationStartDto } from '../modules/conversation/dto/conversationStart.dto';
 import { FriendDto } from '../modules/friend/dto/friend.dto';
 import { FriendDeleteDto } from '../modules/friend/dto/friendDelete.dto';
 import { UserAuthDto } from '../modules/user/dto/userAuth.dto';
@@ -15,9 +17,17 @@ router.post('/user/login', validationMiddleware(UserAuthDto), userController.log
 router.post('/user/logout', userController.logout);
 router.get('/user/refresh', userController.refreshToken);
 
-// Friends
+// Friend
 router.get('/friend', authMiddleware, friendController.getFriends);
 router.post('/friend', authMiddleware, validationMiddleware(FriendDto), friendController.addFriend);
 router.delete('/friend', authMiddleware, validationMiddleware(FriendDeleteDto), friendController.deleteFriend);
+
+// Conversation
+router.post(
+  '/conversation/start',
+  authMiddleware,
+  validationMiddleware(ConversationStartDto),
+  conversationController.start,
+);
 
 export default router;

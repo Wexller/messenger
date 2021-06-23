@@ -8,6 +8,14 @@ import { INCORRECT_USER_DATA, SALT_ROUNDS } from './user.constants';
 import { User } from './user.entity';
 
 class UserService {
+  async getUsers(userIds: string[]): Promise<User[]> {
+    return await User.findAll({
+      where: {
+        id: userIds,
+      },
+    });
+  }
+
   async registration({ username, password }: UserAuthDto): Promise<IAuthUser> {
     const candidate = await User.findOne({ where: { username } });
 
