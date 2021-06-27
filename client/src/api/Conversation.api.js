@@ -4,15 +4,15 @@ class ConversationApi extends Api {
   static conversationPath = 'conversation';
 
   /**
-   * @param {String} username
+   * @param {String} friendId
    * @returns {Promise<{data: any, success: boolean}|{success: boolean, message}>}
    */
-  async startConversation(username) {
+  async startConversation(friendId) {
     return await this.send({
       method: 'POST',
       url: this.buildPath(ConversationApi.conversationPath, 'start'),
       data: {
-        username,
+        friendId,
       },
     });
   }

@@ -38,8 +38,8 @@ export default {
     firstConversationLoad: (state) => state.firstConversationLoad[state.id],
   },
   actions: {
-    async startConversation({ commit }, username) {
-      const { data, success } = await conversationApi.startConversation(username);
+    async startConversation({ commit }, friendId) {
+      const { data, success } = await conversationApi.startConversation(friendId);
 
       if (success) {
         commit('SET_CONVERSATION', data);
@@ -47,7 +47,7 @@ export default {
       }
     },
     async updateLastReadMessage({ commit }, { conversationId, messageId }) {
-      const { data, success } = await conversationApi.updateLastReadMessage(conversationId, messageId);
+      const { success } = await conversationApi.updateLastReadMessage(conversationId, messageId);
 
       // if (success) {
       //   commit('UPDATE_LAST_READ_MESSAGE', { conversationId: data.conversationId, messageId: data.messageId });

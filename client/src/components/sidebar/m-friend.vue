@@ -60,7 +60,7 @@
       </div>
 
       <!-- Link -->
-      <a @click.prevent="newConversation(friend.id)" href="#" class="stretched-link"></a>
+      <a @click.prevent="startConversationHandler(friend.id)" href="#" class="stretched-link"></a>
     </div>
   </div>
 </template>
