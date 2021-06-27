@@ -1,7 +1,7 @@
-import Api from '@/api/Api';
+import { Api } from '@/api/Api';
 
-export default class Conversation extends Api {
-  static conversationPath = 'conversations';
+class ConversationApi extends Api {
+  static conversationPath = 'conversation';
 
   /**
    * @param {String} username
@@ -10,7 +10,7 @@ export default class Conversation extends Api {
   async startConversation(username) {
     return await this.send({
       method: 'POST',
-      url: this.buildPath(Conversation.conversationPath, 'start'),
+      url: this.buildPath(ConversationApi.conversationPath, 'start'),
       data: {
         username,
       },
@@ -25,7 +25,7 @@ export default class Conversation extends Api {
   async updateLastReadMessage(conversationId, messageId) {
     return await this.send({
       method: 'POST',
-      url: this.buildPath(Conversation.conversationPath, 'update_last_message_id'),
+      url: this.buildPath(ConversationApi.conversationPath, 'update_last_message_id'),
       data: {
         conversationId,
         messageId,
@@ -33,3 +33,5 @@ export default class Conversation extends Api {
     });
   }
 }
+
+export const conversationApi = new ConversationApi();

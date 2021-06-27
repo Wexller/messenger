@@ -1,5 +1,5 @@
 import { TABS } from '@/constants';
-import { userApi } from '@/api';
+import { friendApi } from '@/api/Friend.api';
 
 export default {
   namespaced: true,
@@ -14,7 +14,7 @@ export default {
       commit('SET_TAB', tab);
     },
     async getFriends({ commit }) {
-      const { data, success } = await userApi.getUsers();
+      const { data, success } = await friendApi.getFriends();
 
       if (success && data) {
         commit('SET_FRIENDS', data);

@@ -10,7 +10,7 @@ import MLoginForm from './components/auth/m-auth';
 import { mapState } from 'vuex';
 import toast from '@/ui/toast';
 import MMain from '@/components/m-main';
-import Api from '@/api/Api';
+// import Api from '@/api/Api';
 
 export default {
   name: 'App',
@@ -23,9 +23,9 @@ export default {
   },
   methods: {
     updateToken(token) {
-      if (Api.jwtToken !== token) {
-        Api.jwtToken = token;
-      }
+      // if (Api.jwtToken !== token) {
+      //   Api.jwtToken = token;
+      // }
     },
   },
   watch: {

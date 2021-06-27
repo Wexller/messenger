@@ -90,12 +90,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions('user', ['signIn']),
+    ...mapActions('user', ['login']),
     switchAuth() {
       this.$emit('switch', AUTH.SIGN_UP);
     },
     onSubmit() {
-      this.signIn({
+      this.login({
         username: this.username,
         password: this.password,
       });

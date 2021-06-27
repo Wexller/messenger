@@ -2,8 +2,9 @@ import axios from 'axios';
 import { eventBus } from '@/main';
 import { TOAST } from '@/constants';
 import path from 'path';
+import { localStorageToken } from '@/local-storage';
 
-export default class Api {
+export class Api {
   static jwtToken = null;
   static apiPath = 'api';
 
@@ -11,6 +12,8 @@ export default class Api {
     this.axiosInstance = axios.create({
       headers: { 'Content-Type': 'application/json' },
     });
+
+    this.#initInterceptors();
   }
 
   buildPath(...paths) {
@@ -27,6 +30,14 @@ export default class Api {
     }
 
     return await this.#exec(options);
+  }
+
+  handleBadResponse(message) {
+    eventBus.$emit('toast', {
+      type: TOAST.ERROR,
+      message,
+      title: 'Something went wrong...',
+    });
   }
 
   async #exec(options) {
@@ -48,11 +59,40 @@ export default class Api {
     return result;
   }
 
-  handleBadResponse(message) {
-    eventBus.$emit('toast', {
-      type: TOAST.ERROR,
-      message,
-      title: 'Something went wrong...',
+  #initInterceptors() {
+    this.#requestInterceptor();
+    this.#responseInterceptor();
+  }
+
+  #requestInterceptor() {
+    this.axiosInstance.interceptors.request.use((config) => {
+      const token = localStorageToken.get();
+      config.headers.Authorization = `Bearer ${token}`;
+      return config;
     });
+  }
+
+  #responseInterceptor() {
+    this.axiosInstance.interceptors.response.use(
+      (config) => {
+        return config;
+      },
+      async (error) => {
+        const originalRequest = error.config;
+
+        if (+error.response.status === 401 && error.config && !error.config._isRetry) {
+          originalRequest._isRetry = true;
+
+          try {
+            const response = await axios.get(`/api/user/refresh`);
+            localStorageToken.set(response.data.accessToken);
+            return this.axiosInstance.request(originalRequest);
+          } catch (e) {
+            console.log('Unauthorized');
+          }
+        }
+        throw error;
+      }
+    );
   }
 }

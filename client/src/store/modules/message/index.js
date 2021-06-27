@@ -1,4 +1,4 @@
-import { messageApi } from '@/api';
+import { messageApi } from '@/api/Message.api';
 import Vue from 'vue';
 import { LOAD_MESSAGES } from '@/constants';
 

@@ -1,12 +1,12 @@
-import Api from '@/api/Api';
+import { Api } from '@/api/Api';
 
-export default class Message extends Api {
+class MessageApi extends Api {
   static messagePath = 'messages';
 
   async sendMessage(text, conversationId) {
     return await this.send({
       method: 'POST',
-      url: this.buildPath(Message.messagePath),
+      url: this.buildPath(MessageApi.messagePath),
       data: {
         text,
         conversationId,
@@ -16,7 +16,7 @@ export default class Message extends Api {
 
   async getMessages(conversationId) {
     return await this.send({
-      url: this.buildPath(Message.messagePath, conversationId),
+      url: this.buildPath(MessageApi.messagePath, conversationId),
     });
   }
 
@@ -28,7 +28,7 @@ export default class Message extends Api {
    */
   async getOldMessages(conversationId, messageId) {
     return await this.send({
-      url: this.buildPath(Message.messagePath, conversationId, 'load_old_messages'),
+      url: this.buildPath(MessageApi.messagePath, conversationId, 'load_old_messages'),
       params: {
         messageId,
       },
@@ -43,10 +43,12 @@ export default class Message extends Api {
    */
   async getNewMessages(conversationId, messageId) {
     return await this.send({
-      url: this.buildPath(Message.messagePath, conversationId, 'load_new_messages'),
+      url: this.buildPath(MessageApi.messagePath, conversationId, 'load_new_messages'),
       params: {
         messageId,
       },
     });
   }
 }
+
+export const messageApi = new MessageApi();

@@ -1,4 +1,4 @@
-import { conversationApi } from '@/api';
+import { conversationApi } from '@/api/Conversation.api';
 import { CONVERSATION_TYPES } from '@/constants';
 import Vue from 'vue';
 

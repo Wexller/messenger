@@ -69,22 +69,21 @@ export default {
       return contentType === this.currentContentType;
     },
     connectToSocket(token) {
-      this.$socket.client.io.opts.transportOptions = {
-        polling: {
-          extraHeaders: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      };
-
-      this.$socket.client.connect();
+      // this.$socket.client.io.opts.transportOptions = {
+      //   polling: {
+      //     extraHeaders: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   },
+      // };
+      // this.$socket.client.connect();
     },
   },
   created() {
     this.connectToSocket(this.token);
   },
   destroyed() {
-    this.$socket.client.close();
+    // this.$socket.client.close();
   },
 };
 </script>

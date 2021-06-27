@@ -1,4 +1,4 @@
-import { authApi } from '@/api';
+import { userApi } from '@/api/User.api';
 import { localStorageToken, localStorageUserId } from '@/local-storage';
 
 export default {
@@ -15,9 +15,9 @@ export default {
     };
   },
   actions: {
-    async signIn({ commit }, { username, password }) {
+    async login({ commit }, { username, password }) {
       commit('START_LOGIN_PROCESS');
-      const { data, success } = await authApi.signIn({ username, password });
+      const { data, success } = await userApi.login({ username, password });
 
       if (success) {
         commit('LOGIN_USER', data);
@@ -25,9 +25,9 @@ export default {
 
       commit('STOP_LOGIN_PROCESS');
     },
-    async signUp({ commit }, { username, password }) {
+    async register({ commit }, { username, password }) {
       commit('START_LOGIN_PROCESS');
-      const { data, success } = await authApi.signUp({ username, password });
+      const { data, success } = await userApi.register({ username, password });
 
       if (success) {
         commit('LOGIN_USER', data);
@@ -40,13 +40,13 @@ export default {
     },
   },
   mutations: {
-    LOGIN_USER(state, { user, token }) {
-      state.token = token;
-      state.userId = user.id;
+    LOGIN_USER(state, { id, accessToken }) {
+      state.token = accessToken;
+      state.userId = id.id;
       state.isUserLoggedIn = true;
 
-      localStorageToken.set(token);
-      localStorageUserId.set(user.id);
+      localStorageToken.set(accessToken);
+      localStorageUserId.set(id.id);
     },
     LOGOUT_USER(state) {
       state.token = null;

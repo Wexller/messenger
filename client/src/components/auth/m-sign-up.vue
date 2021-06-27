@@ -95,12 +95,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions('user', ['signUp']),
+    ...mapActions('user', ['register']),
     switchAuth() {
       this.$emit('switch', AUTH.SIGN_IN);
     },
     onSubmit() {
-      this.signUp({
+      this.register({
         username: this.username,
         password: this.password,
       });
