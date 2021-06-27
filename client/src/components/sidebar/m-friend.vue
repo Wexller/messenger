@@ -12,30 +12,55 @@
         </div>
 
         <div class="align-self-center ml-5">
-          <div class="dropdown z-index-max">
-            <a
+          <b-dropdown variant="link" class="z-index-max" no-caret>
+            <template #button-content>
+              <a
+                href="#"
+                class="btn btn-sm btn-ico btn-link text-muted w-auto"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fe-more-vertical"></i>
+              </a>
+            </template>
+
+            <b-dropdown-item
+              @click="startConversationHandler(friend.id)"
               href="#"
-              class="btn btn-sm btn-ico btn-link text-muted w-auto"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="fe-more-vertical"></i>
-            </a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                New chat <span class="ml-auto fe-edit-2"></span>
-              </a>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                Delete <span class="ml-auto fe-trash-2"></span>
-              </a>
-            </div>
-          </div>
+              link-class="d-flex align-items-center"
+              >New chat <span class="ml-auto fe-edit-2"></span
+            ></b-dropdown-item>
+
+            <b-dropdown-item @click="deleteFriendHandler(friend.id)" href="#" link-class="d-flex align-items-center"
+              >Delete <span class="ml-auto fe-trash-2"></span
+            ></b-dropdown-item>
+          </b-dropdown>
+
+          <!--          <div class="dropdown z-index-max">-->
+          <!--            <a-->
+          <!--              href="#"-->
+          <!--              class="btn btn-sm btn-ico btn-link text-muted w-auto"-->
+          <!--              data-toggle="dropdown"-->
+          <!--              aria-haspopup="true"-->
+          <!--              aria-expanded="false"-->
+          <!--            >-->
+          <!--              <i class="fe-more-vertical"></i>-->
+          <!--            </a>-->
+          <!--            <div class="dropdown-menu show">-->
+          <!--              <a class="dropdown-item d-flex align-items-center" href="#">-->
+          <!--                New chat <span class="ml-auto fe-edit-2"></span>-->
+          <!--              </a>-->
+          <!--              <a class="dropdown-item d-flex align-items-center" href="#">-->
+          <!--                Delete <span class="ml-auto fe-trash-2"></span>-->
+          <!--              </a>-->
+          <!--            </div>-->
+          <!--          </div>-->
         </div>
       </div>
 
       <!-- Link -->
-      <a @click.prevent="friendClickHandler(friend.username)" href="#" class="stretched-link"></a>
+      <a @click.prevent="newConversation(friend.id)" href="#" class="stretched-link"></a>
     </div>
   </div>
 </template>
@@ -53,8 +78,33 @@ export default {
   },
   methods: {
     ...mapActions('conversation', ['startConversation']),
-    friendClickHandler(username) {
-      this.startConversation(username);
+    ...mapActions('friend', ['deleteFriend']),
+    startConversationHandler(id) {
+      this.startConversation(id);
+    },
+    async deleteFriendHandler(id) {
+      try {
+        const result = await this.$bvModal.msgBoxConfirm(
+          `Please confirm that you want to delete ${this.friend.username}.`,
+          {
+            title: 'Please Confirm',
+            size: 'sm',
+            buttonSize: 'sm',
+            okVariant: 'danger',
+            okTitle: 'YES',
+            cancelTitle: 'CANCEL',
+            footerClass: 'p-2',
+            hideHeaderClose: false,
+            centered: true,
+          }
+        );
+
+        if (result) {
+          await this.deleteFriend(id);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

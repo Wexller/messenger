@@ -2,12 +2,13 @@ import { ApiException } from '../../core/exceptions/api.exception';
 import { IUser } from '../user/interfaces/user.interface';
 import { User } from '../user/user.entity';
 import { Friend } from './friend.entity';
+import { Op } from 'sequelize';
 
 class FriendService {
   async addFriend(userId: string, friendUsername: string): Promise<boolean> {
     const friendRecord = await User.findOne({
       where: {
-        username: friendUsername,
+        username: { [Op.like]: friendUsername },
       },
     });
 

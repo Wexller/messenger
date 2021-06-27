@@ -27,14 +27,15 @@
 
           <!-- Button -->
           <button
+            v-b-modal="addFriendModal"
             type="button"
             class="btn btn-lg btn-block btn-secondary d-flex align-items-center mb-6"
-            data-toggle="modal"
-            data-target="#invite-friends"
           >
-            Invite friends
+            Add friends
             <i class="fe-users ml-auto"></i>
           </button>
+
+          <m-add-friend :id="addFriendModal" />
 
           <!-- Friends -->
           <nav class="mb-n6">
@@ -106,18 +107,20 @@ import avatarMale from '@/assets/images/avatar_male.jpg';
 import avatarFemale from '@/assets/images/avatar_female.jpg';
 import MFriend from '@/components/sidebar/m-friend';
 import { mapActions, mapState } from 'vuex';
+import MAddFriend from '@/components/sidebar/m-add-friend';
 
 export default {
   name: 'm-friends-list',
-  components: { MFriend },
+  components: { MAddFriend, MFriend },
   data() {
     return {
       avatarMale,
       avatarFemale,
+      addFriendModal: 'add-friend',
     };
   },
   computed: {
-    ...mapState('sidebar', ['friends']),
+    ...mapState('friend', ['friends']),
     friendsList() {
       return this.friends;
     },
@@ -136,7 +139,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('sidebar', ['getFriends']),
+    ...mapActions('friend', ['getFriends']),
   },
   created() {
     if (!this.friendsList.length) {

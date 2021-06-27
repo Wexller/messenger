@@ -4,6 +4,7 @@ import user from './modules/user';
 import sidebar from './modules/sidebar';
 import conversation from './modules/conversation';
 import message from './modules/message';
+import friend from '@/store/modules/friend';
 import { CONTENT_TYPES } from '@/constants';
 
 Vue.use(Vuex);
@@ -22,5 +23,5 @@ export default new Vuex.Store({
       state.contentType = type;
     },
   },
-  modules: { user, sidebar, conversation, message },
+  modules: { user, sidebar, conversation, message, friend },
 });

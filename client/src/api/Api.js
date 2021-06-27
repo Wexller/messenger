@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { eventBus } from '@/main';
 import { TOAST } from '@/constants';
 import path from 'path';
@@ -20,6 +20,10 @@ export class Api {
     return '/' + path.join(Api.apiPath, ...paths);
   }
 
+  /**
+   * @param {AxiosRequestConfig} options
+   * @returns {Promise<{data: any, success: boolean}|{success: boolean, message}>}
+   */
   async send(options) {
     if (Api.jwtToken) {
       options.headers = { Authorization: `Bearer ${Api.jwtToken}` };
@@ -40,6 +44,10 @@ export class Api {
     });
   }
 
+  /**
+   * @param {AxiosRequestConfig} options
+   * @returns {Promise<{data: any, success: boolean}|{success: boolean, message}>}
+   */
   async #exec(options) {
     let result;
 
