@@ -4,7 +4,7 @@ export default {
   namespaced: true,
   state: () => {
     return {
-      currentTab: TABS.FRIENDS_LIST,
+      currentTab: TABS.CONVERSATIONS,
     };
   },
   actions: {

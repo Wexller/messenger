@@ -27,14 +27,20 @@
 
           <!-- Favourites -->
           <div class="text-center hide-scrollbar d-flex my-7" data-horizontal-scroll="">
-            <a href="#" class="d-block text-reset mr-7 mr-lg-6">
+            <a
+              v-for="friend in friends"
+              :key="friend.id"
+              @click.prevent="startConversation(friend.id)"
+              href="#"
+              class="d-block text-reset mr-7 mr-lg-6"
+            >
               <div class="avatar avatar-sm avatar-online mb-3">
                 <img class="avatar-img" :src="avatarMale" alt="Image Description" />
               </div>
-              <div class="small">William</div>
+              <div class="small">{{ friend.name || friend.username }}</div>
             </a>
 
-            <a href="#" class="d-block text-reset mr-7 mr-lg-6">
+            <!--            <a href="#" class="d-block text-reset mr-7 mr-lg-6">
               <div class="avatar avatar-sm avatar-online mb-3">
                 <img class="avatar-img" :src="avatarFemale" alt="Image Description" />
               </div>
@@ -81,13 +87,13 @@
                 <img class="avatar-img" :src="avatarFemale" alt="Image Description" />
               </div>
               <div class="small">Thomas</div>
-            </a>
+            </a>-->
           </div>
           <!-- Favourites -->
 
           <!-- Chats -->
           <nav class="nav d-block list-discussions-js mb-n6">
-            <!-- Chat link -->
+            <!--             Chat link
             <a class="text-reset nav-link p-0 mb-6" href="chat-1.html">
               <div class="card card-active-listener">
                 <div class="card-body">
@@ -113,8 +119,8 @@
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
-            <!-- Chat link -->
+             Chat link
+             Chat link
             <a class="text-reset nav-link p-0 mb-6" href="chat-2.html">
               <div class="card card-active-listener">
                 <div class="card-body">
@@ -136,10 +142,19 @@
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
-            <!-- Chat link -->
-            <a class="text-reset nav-link p-0 mb-6" href="#">
+             Chat link
+             Chat link -->
+            <a
+              v-for="conversation in conversationList"
+              @click.prevent="openConversation(conversation.id)"
+              class="text-reset nav-link p-0 mb-6"
+              href="#"
+            >
               <div class="card card-active-listener">
+                <!--                <div class="badge badge-circle badge-primary badge-border-light badge-top-right">-->
+                <!--                  <span>3</span>-->
+                <!--                </div>-->
+
                 <div class="card-body">
                   <div class="media">
                     <div class="avatar mr-5">
@@ -148,17 +163,17 @@
 
                     <div class="media-body overflow-hidden">
                       <div class="d-flex align-items-center mb-1">
-                        <h6 class="text-truncate mb-0 mr-auto">Simon Hensley</h6>
-                        <p class="small text-muted text-nowrap ml-4">10:38 am</p>
+                        <h6 class="text-truncate mb-0 mr-auto">{{ conversationName(conversation.id) }}</h6>
+                        <p class="small text-muted text-nowrap ml-4">{{ transformDate(conversation.lastMessageAt) }}</p>
                       </div>
-                      <div class="text-truncate">I’m sorry, this question would be out of my expertise.</div>
+                      <div class="text-truncate">{{ conversation.lastMessageText || 'Empty' }}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
-            <!-- Chat link -->
+            <!--             Chat link
+             Chat link
             <a class="text-reset nav-link p-0 mb-6" href="#">
               <div class="card card-active-listener">
                 <div class="card-body">
@@ -178,8 +193,8 @@
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
-            <!-- Chat link -->
+             Chat link
+             Chat link
             <a class="text-reset nav-link p-0 mb-6" href="#">
               <div class="card card-active-listener">
                 <div class="card-body">
@@ -202,8 +217,8 @@
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
-            <!-- Chat link -->
+             Chat link
+             Chat link
             <a class="text-reset nav-link p-0 mb-6" href="#">
               <div class="card card-active-listener">
                 <div class="card-body">
@@ -223,8 +238,8 @@
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
-            <!-- Chat link -->
+             Chat link
+             Chat link
             <a class="text-reset nav-link p-0 mb-6" href="#">
               <div class="card card-active-listener">
                 <div class="card-body">
@@ -246,8 +261,8 @@
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
-            <!-- Chat link -->
+             Chat link
+             Chat link
             <a class="text-reset nav-link p-0 mb-6" href="#">
               <div class="card card-active-listener">
                 <div class="card-body">
@@ -267,8 +282,8 @@
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
-            <!-- Chat link -->
+             Chat link
+             Chat link
             <a class="text-reset nav-link p-0 mb-6" href="#">
               <div class="card card-active-listener">
                 <div class="card-body">
@@ -288,7 +303,7 @@
                 </div>
               </div>
             </a>
-            <!-- Chat link -->
+             Chat link -->
           </nav>
           <!-- Chats -->
         </div>
@@ -300,6 +315,8 @@
 <script>
 import avatarMale from '@/assets/images/avatar_male.jpg';
 import avatarFemale from '@/assets/images/avatar_female.jpg';
+import { mapActions, mapGetters, mapState } from 'vuex';
+import { getDateTime } from '@/utils/date-time';
 
 export default {
   name: 'm-conversations',
@@ -308,6 +325,19 @@ export default {
       avatarMale,
       avatarFemale,
     };
+  },
+  computed: {
+    ...mapGetters('conversation', ['conversationName', 'conversationList']),
+    ...mapState('friend', ['friends']),
+  },
+  methods: {
+    ...mapActions('conversation', ['getConversationList', 'openConversation', 'startConversation']),
+    transformDate(date) {
+      return getDateTime(date);
+    },
+  },
+  created() {
+    this.getConversationList();
   },
 };
 </script>

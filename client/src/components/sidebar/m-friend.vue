@@ -7,7 +7,7 @@
         </div>
 
         <div class="media-body align-self-center">
-          <h6 class="mb-0">{{ friend.username }}</h6>
+          <h6 class="mb-0">{{ friend.name || friend.username }}</h6>
           <small class="text-muted">Online</small>
         </div>
 
@@ -77,7 +77,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('conversation', ['startConversation']),
+    ...mapActions('conversation', ['startConversation', 'openConversation']),
     ...mapActions('friend', ['deleteFriend']),
     startConversationHandler(id) {
       this.startConversation(id);

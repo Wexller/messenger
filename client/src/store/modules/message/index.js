@@ -66,17 +66,15 @@ export default {
 
       const { data, success } = await messageApi.sendMessage(text, conversation.id);
     },
-    async getMessages({ state, commit, rootState }) {
-      const conversation = rootState['conversation'];
-
-      if (state.messagesData[conversation.id]) {
+    async getMessages({ state, commit, rootState }, conversationId) {
+      if (state.messagesData[conversationId]) {
         return;
       }
 
-      const { data, success } = await messageApi.getMessages(conversation.id);
+      const { data, success } = await messageApi.getMessages(conversationId);
 
       if (success) {
-        commit('SET_MESSAGES', { messages: data, key: conversation.id });
+        commit('SET_MESSAGES', { messages: data, key: conversationId });
       }
     },
     async loadMoreMessages({ commit, getters, rootState }, loadType) {

@@ -1,3 +1,7 @@
+import * as sequelize from 'sequelize';
+import { Op } from 'sequelize';
+import { Message } from '../message/message.entity';
+import { UserConversation } from '../user-conversations/user-conversation.entity';
 import { User } from '../user/user.entity';
 import { userService } from '../user/user.service';
 import { CONVERSATION_TYPES } from './conversation.constants';
@@ -5,13 +9,39 @@ import { Conversation } from './conversation.entity';
 import { IConversation } from './interfaces/conversation.interface';
 
 class ConversationService {
-  async getInfo(id: string): Promise<Conversation> {
-    return await Conversation.findOne({
+  async getAll(userId: string): Promise<IConversation[]> {
+    const conversations = await Conversation.findAll({
+      attributes: {
+        include: [
+          [sequelize.literal(ConversationService.messageInfoQuery('createdAt')), 'lastMessageAt'],
+          [sequelize.literal(ConversationService.messageInfoQuery('text')), 'lastMessageText'],
+        ],
+      },
+      include: { model: User },
+      order: [[sequelize.literal('"lastMessageAt"'), 'DESC']],
+      where: {
+        id: { [Op.in]: sequelize.literal(ConversationService.userConversationsQuery()) },
+      },
+      bind: [userId],
+    });
+
+    return conversations.map((conversation) =>
+      ConversationService.transformConversationInfo(conversation, userId, ['lastMessageAt', 'lastMessageText']),
+    );
+  }
+
+  async getConversationById(id: string): Promise<Conversation> {
+    return await Conversation.findByPk(id, {
       include: {
         model: User,
       },
-      where: { id },
     });
+  }
+
+  async getConversationInfo(id: string, userId: string): Promise<IConversation> {
+    const conversation = await this.getConversationById(id);
+
+    return ConversationService.transformConversationInfo(conversation, userId);
   }
 
   async createPrivate(userIds: string[]): Promise<Conversation> {
@@ -42,11 +72,50 @@ class ConversationService {
 
     if (!conversation) {
       const newConversation = await this.createPrivate(userIds);
-      conversation = await this.getInfo(newConversation.id);
+      conversation = await this.getConversationById(newConversation.id);
     }
 
-    const lastReadMessageId = conversation.users.find((user) => user.id === requestedUserId).UserConversation
+    return ConversationService.transformConversationInfo(conversation, requestedUserId);
+  }
+
+  private static messageInfoQuery(column: string): string {
+    return `(SELECT "${column}" FROM "${Message.tableName}" AS message WHERE message."conversationId" = "Conversation"."id" ORDER BY message."createdAt" DESC LIMIT 1)`;
+  }
+
+  private static userConversationsQuery(): string {
+    return `(SELECT "C"."id"
+            FROM "${Conversation.tableName}" "C"
+                     LEFT OUTER JOIN "${UserConversation.tableName}" "UC" ON "C".id = "UC"."conversationId"
+                     LEFT OUTER JOIN "${User.tableName}" "U" ON "UC"."userId" = "U".id
+            WHERE "U"."id" = $1)`;
+  }
+
+  private static async getUsersPrivateConversations(users: string[]): Promise<Conversation[]> {
+    return await Conversation.findAll({
+      include: {
+        model: User,
+      },
+      where: {
+        type: CONVERSATION_TYPES.PRIVATE,
+        '$users.id$': users,
+      },
+    });
+  }
+
+  private static transformConversationInfo(
+    conversation: Conversation,
+    userId: string,
+    properties: string[] = [],
+  ): IConversation {
+    const lastReadMessageId = conversation.users.find((user) => user.id === userId)['UserConversation']
       .lastReadMessageId;
+
+    const additionalProperties = {};
+    for (const property of properties) {
+      if (conversation.getDataValue(property) !== undefined) {
+        additionalProperties[property] = conversation.getDataValue(property);
+      }
+    }
 
     return {
       id: conversation.id,
@@ -60,19 +129,8 @@ class ConversationService {
         name: user.name,
         username: user.username,
       })),
+      ...additionalProperties,
     };
-  }
-
-  private static async getUsersPrivateConversations(users: string[]): Promise<Conversation[]> {
-    return await Conversation.findAll({
-      include: {
-        model: User,
-      },
-      where: {
-        type: CONVERSATION_TYPES.PRIVATE,
-        '$users.id$': users,
-      },
-    });
   }
 }
 

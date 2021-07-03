@@ -7,5 +7,5 @@ export interface IConversation {
   lastReadMessageId: string;
   firstMessageId: string | null;
   lastMessageId: string | null;
-  users: [IUser];
+  users: IUser[];
 }

@@ -87,7 +87,7 @@
 </template>
 <script>
 import avatarFemale from '@/assets/images/avatar_female.jpg';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'm-conversation-header',
@@ -98,8 +98,9 @@ export default {
   },
   computed: {
     ...mapGetters('conversation', ['conversationName']),
+    ...mapState('conversation', ['conversationId']),
     conversationTitle() {
-      return this.conversationName;
+      return this.conversationName(this.conversationId);
     },
   },
 };

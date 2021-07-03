@@ -3,6 +3,7 @@ import { validationMiddleware } from '../core/middleware/validation.middleware';
 import { authMiddleware } from '../core/middleware/auth.middleware';
 import { conversationController } from '../modules/conversation/conversation.controller';
 import { ConversationStartDto } from '../modules/conversation/dto/conversationStart.dto';
+import { conversationAccessMiddleware } from '../modules/conversation/conversationAccess.middleware';
 import { FriendDto } from '../modules/friend/dto/friend.dto';
 import { FriendDeleteDto } from '../modules/friend/dto/friendDelete.dto';
 import { UserAuthDto } from '../modules/user/dto/userAuth.dto';
@@ -23,6 +24,13 @@ router.post('/friend', authMiddleware, validationMiddleware(FriendDto), friendCo
 router.delete('/friend', authMiddleware, validationMiddleware(FriendDeleteDto), friendController.deleteFriend);
 
 // Conversation
+router.get('/conversation', authMiddleware, conversationController.getAll);
+router.get(
+  '/conversation/:conversationId',
+  authMiddleware,
+  conversationAccessMiddleware,
+  conversationController.getInfo,
+);
 router.post(
   '/conversation/start',
   authMiddleware,

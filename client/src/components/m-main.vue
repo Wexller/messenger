@@ -17,7 +17,7 @@ import MSidebar from '@/components/sidebar/m-sidebar';
 import MConversation from '@/components/conversation/m-conversation';
 import avatarMale from '@/assets/images/avatar_male.jpg';
 import { CONTENT_TYPES, CONVERSATION_TYPES } from '@/constants';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import MIntro from '@/components/m-intro';
 
 export default {
@@ -32,10 +32,8 @@ export default {
   },
   computed: {
     ...mapState(['contentType']),
-    ...mapState('conversation', {
-      conversationId: (state) => state.id,
-      conversationType: (state) => state.type,
-    }),
+    ...mapState('conversation', ['conversationId']),
+    ...mapGetters('conversation', ['conversationType']),
     ...mapState('user', ['token']),
     currentContentType() {
       return this.contentType;
@@ -43,15 +41,15 @@ export default {
   },
   watch: {
     // TODO: Refactor
-    conversationId(id) {
+    conversationId(conversationId) {
       let contentType = CONTENT_TYPES.INTRO;
 
-      if (id) {
-        if (this.conversationType === CONVERSATION_TYPES.PRIVATE) {
+      if (conversationId) {
+        if (this.conversationType(conversationId) === CONVERSATION_TYPES.PRIVATE) {
           contentType = CONTENT_TYPES.PRIVATE_CONVERSATION;
         }
 
-        if (this.conversationType === CONVERSATION_TYPES.GENERAL) {
+        if (this.conversationType(conversationId) === CONVERSATION_TYPES.GENERAL) {
           contentType = CONTENT_TYPES.GENERAL_CONVERSATION;
         }
       }
@@ -64,7 +62,6 @@ export default {
   },
   methods: {
     ...mapActions(['changeContentType']),
-    ...mapActions('message', ['getMessages']),
     isContentVisible(contentType) {
       return contentType === this.currentContentType;
     },

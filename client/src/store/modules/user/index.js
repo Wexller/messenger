@@ -42,11 +42,11 @@ export default {
   mutations: {
     LOGIN_USER(state, { id, accessToken }) {
       state.token = accessToken;
-      state.userId = id.id;
+      state.userId = id;
       state.isUserLoggedIn = true;
 
       localStorageToken.set(accessToken);
-      localStorageUserId.set(id.id);
+      localStorageUserId.set(id);
     },
     LOGOUT_USER(state) {
       state.token = null;

@@ -4,6 +4,26 @@ class ConversationApi extends Api {
   static conversationPath = 'conversation';
 
   /**
+   * @returns {Promise<{data: any, success: boolean}|{success: boolean, message}>}
+   */
+  async getList() {
+    return await this.send({
+      method: 'GET',
+      url: this.buildPath(ConversationApi.conversationPath),
+    });
+  }
+
+  /**
+   * @returns {Promise<{data: any, success: boolean}|{success: boolean, message}>}
+   */
+  async getInfo(conversationId) {
+    return await this.send({
+      method: 'GET',
+      url: this.buildPath(ConversationApi.conversationPath, conversationId),
+    });
+  }
+
+  /**
    * @param {String} friendId
    * @returns {Promise<{data: any, success: boolean}|{success: boolean, message}>}
    */
