@@ -9,7 +9,7 @@ export default {
   },
   getters: {
     messages(state, getters, rootState) {
-      const conversationId = rootState.conversation.id;
+      const conversationId = rootState.conversation.conversationId;
 
       return state.messagesData[conversationId] || [];
     },
@@ -62,9 +62,9 @@ export default {
   },
   actions: {
     async sendMessage({ commit, rootState }, text) {
-      const conversation = rootState['conversation'];
+      const { conversationId } = rootState['conversation'];
 
-      const { data, success } = await messageApi.sendMessage(text, conversation.id);
+      const { data, success } = await messageApi.sendMessage(text, conversationId);
     },
     async getMessages({ state, commit, rootState }, conversationId) {
       if (state.messagesData[conversationId]) {

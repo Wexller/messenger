@@ -1,7 +1,7 @@
 import { Api } from '@/api/Api';
 
 class MessageApi extends Api {
-  static messagePath = 'messages';
+  static messagePath = 'message';
 
   async sendMessage(text, conversationId) {
     return await this.send({
@@ -28,7 +28,7 @@ class MessageApi extends Api {
    */
   async getOldMessages(conversationId, messageId) {
     return await this.send({
-      url: this.buildPath(MessageApi.messagePath, conversationId, 'load_old_messages'),
+      url: this.buildPath(MessageApi.messagePath, conversationId, 'get_old'),
       params: {
         messageId,
       },
@@ -43,7 +43,7 @@ class MessageApi extends Api {
    */
   async getNewMessages(conversationId, messageId) {
     return await this.send({
-      url: this.buildPath(MessageApi.messagePath, conversationId, 'load_new_messages'),
+      url: this.buildPath(MessageApi.messagePath, conversationId, 'get_new'),
       params: {
         messageId,
       },

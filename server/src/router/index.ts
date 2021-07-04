@@ -6,6 +6,8 @@ import { ConversationStartDto } from '../modules/conversation/dto/conversationSt
 import { conversationAccessMiddleware } from '../modules/conversation/conversationAccess.middleware';
 import { FriendDto } from '../modules/friend/dto/friend.dto';
 import { FriendDeleteDto } from '../modules/friend/dto/friendDelete.dto';
+import { NewMessageDto } from '../modules/message/dto/newMessage.dto';
+import { messageController } from '../modules/message/message.controller';
 import { UserAuthDto } from '../modules/user/dto/userAuth.dto';
 import { userController } from '../modules/user/user.controller';
 import { friendController } from '../modules/friend/friend.controller';
@@ -36,6 +38,28 @@ router.post(
   authMiddleware,
   validationMiddleware(ConversationStartDto),
   conversationController.start,
+);
+
+// Message
+router.get('/message/:conversationId', authMiddleware, conversationAccessMiddleware, messageController.getMessages);
+router.get(
+  '/message/:conversationId/get_old',
+  authMiddleware,
+  conversationAccessMiddleware,
+  messageController.getOldMessages,
+);
+router.get(
+  '/message/:conversationId/get_new',
+  authMiddleware,
+  conversationAccessMiddleware,
+  messageController.getNewMessages,
+);
+router.post(
+  '/message',
+  authMiddleware,
+  conversationAccessMiddleware,
+  validationMiddleware(NewMessageDto),
+  messageController.newMessage,
 );
 
 export default router;

@@ -78,6 +78,17 @@ class ConversationService {
     return ConversationService.transformConversationInfo(conversation, requestedUserId);
   }
 
+  async updateFirstAndLastMessages(conversationId: string, messageId: string): Promise<[number, Conversation[]]> {
+    const values = { lastMessageId: messageId };
+    const { firstMessageId } = await Conversation.findByPk(conversationId);
+
+    if (firstMessageId) {
+      values['firstMessageId'] = messageId;
+    }
+
+    return await Conversation.update(values, { where: { id: conversationId } });
+  }
+
   private static messageInfoQuery(column: string): string {
     return `(SELECT "${column}" FROM "${Message.tableName}" AS message WHERE message."conversationId" = "Conversation"."id" ORDER BY message."createdAt" DESC LIMIT 1)`;
   }
